@@ -29,6 +29,8 @@ import antlr4 from 'antlr4';
         stan: "aktywny"
     }
 
+
+
     let entities = [ENT-ZAKLAD_0001, ENT-SENSOR_0001, ENT-JEDN_ALARM_0001]
     print ENT-ZAKLAD_0001
     print ENT-SENSOR_0001
