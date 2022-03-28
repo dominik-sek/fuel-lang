@@ -1,0 +1,87 @@
+    ENT KONTENER_0001 = {
+        "entity_type": "Kontener",
+        "entitiy_name": "Kontener nr1"
+    }
+
+    ENT KONTENER_0002 = {
+        "entity_type": "Kontener",
+        "entitiy_name": "Kontener nr2"
+    }
+
+    ENT CZUJNIK_0001 = {
+        "entity_type": "Czujnik",
+        "entitiy_name": "Czujnik nr1"
+    }
+
+    ENT CZUJNIK_0002 = {
+        "entity_type": "Czujnik",
+        "entitiy_name": "Czujnik nr2"
+    }
+    
+    ENT PALIWO_0001 = {
+        "entity_type": "Paliwo",
+        "entitiy_name": "Paliwo nr1"
+    }
+    ENT PALIWO_0002 = {
+        "entity_type": "Paliwo",
+        "entitiy_name": "Paliwo nr2"
+    }
+
+    REL CZUJNIK_0001 => KONTENER_0001 as REL_0001 = {
+        "name": "Czujnik1 znajduje sie w Kontenerze 1",
+        "state": "active"
+    }
+    REL CZUJNIK_0002 => KONTENER_0002 as REL_0002 = {
+        "name": "Czujnik 2 znajduje sie w Kontenerze 2",
+        "state": "active"
+    }
+
+    REL PALIWO_0001 => KONTENER_0001 as REL_0003 = {
+        "name": "Paliwo 1 znajduje sie w Kontenerze 1",
+        "state": "active"
+    }
+    REL PALIWO_0002 => KONTENER_0002 as REL_0004= {
+        "name": "Paliwo 2 znajduje sie w Kontenerze 2",
+        "state": "active"
+    }
+
+    ACT POMIAR_TEMPERATURY_0001 = {
+        "type":"pomiar temperatury",
+        "result":"40",
+        "entity": "CZUJNIK_0001"
+    }
+    
+    ACT POMIAR_TEMPERATURY_0002 = {
+        "type":"pomiar temperatury",
+        "result":"25",
+        "entity": "CZUJNIK_0002"
+    }
+
+    EVT ALERT_0001 = {
+        "name":"alert nr1 najwyzszy stopien zagrozenia",
+        "goal":"powiadom ochrone, straz pozarna, wojsko",
+        "location": "ul. Warszawska 15A, 42-200 Częstochowa, I piętro, pierwszy kontener od okna",
+        "subject": "CZUJNIK_0001",
+        "state": "active"
+    }
+
+    EVT ALERT_0002 = {
+        "name":"alert nr2 sredni stopien zagrozenia",
+        "goal":"powiadom ochrone",
+        "location": "ul. Warszawska 15A, 42-200 Częstochowa, I piętro, pierwszy kontener od okna",
+        "subject": "CZUJNIK_0002",
+        "state": "active"
+    }
+
+    let entities = [KONTENER_0001, KONTENER_0002, CZUJNIK_0001, CZUJNIK_0002, PALIWO_0001, PALIWO_0002]
+    let relations = [REL_0001,REL_0002,REL_0003,REL_0004]
+    let activities = [POMIAR_TEMPERATURY_0001, POMIAR_TEMPERATURY_0002]
+    let events = [ALERT_0001, ALERT_0002]
+
+    
+    print KONTENER_0001
+
+
+
+
+    
