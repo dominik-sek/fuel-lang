@@ -22,8 +22,6 @@ class Visitor {
    relations = {};
    arrays = {};
 
-
-
     visitChildren(ctx) {
       
       // handle error
@@ -123,3 +121,5 @@ class Visitor {
     }
 }
 tree.accept(new Visitor());
+
+export default Visitor;

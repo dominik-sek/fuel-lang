@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="styles.css">
+
+    </head>
+    <body>
+        <div class="container">
+            <div class="source-code">
+                <pre>
+                    <code>
+                        <?php
+                        $file = fopen("index.html", "r") or die("Unable to open file!");
+                        while (!feof($file)) {
+                            echo fgets($file) . "<br>";
+                        }
+                        fclose($file);
+                        ?>
+                    </code>
+                </pre>
+            </div>
+
+            <div class="button">compile </div>
+
+            <div class="compiled-code">
+                <!-- code from testjs -->
+                a;sldk;asd
+            </div>
+
+        </div>
+    </body>
+</html>
