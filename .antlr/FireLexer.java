@@ -1,4 +1,4 @@
-// Generated from /Users/dominiksek/Documents/fuel-lang/Fire.g4 by ANTLR 4.8
+// Generated from d:\portfolio\fuellang\Fire.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;

@@ -6,33 +6,22 @@ import * as fs from 'fs';
 import { parse } from 'path';
 
 
-<<<<<<< HEAD
 const inputFile = () =>{
     let input = fs.readFileSync('./test.fuel', 'utf8');
     return input;
 }
     var chars = new antlr4.InputStream(inputFile());
-=======
-
-
-    let entities = [ENT-ZAKLAD_0001, ENT-SENSOR_0001, ENT-JEDN_ALARM_0001]
-    print ENT-ZAKLAD_0001
-    print ENT-SENSOR_0001
-
-     `;
-
-    var chars = new antlr4.InputStream(input);
->>>>>>> 4ed0755999616406f84e131d548c72ac18076eb9
     var lexer = new FireLexer(chars);
     var tokens  = new antlr4.CommonTokenStream(lexer);
     var parser = new FireParser(tokens);
     parser.buildParseTrees = true;
     var tree = parser.compilationUnit();
-    // console.log(tree.toStringTree(parser.ruleNames));
 
 class Visitor {
    objects = {};
    relations = {};
+   arrays = {};
+
 
     visitChildren(ctx) {
 
@@ -40,24 +29,45 @@ class Visitor {
         return;
       }
       if (ctx.children) {
-
         return ctx.children.map(child => {
-
           if (child.children && child.children.length !== 0) {
-
+            // if child is assignment and array
             if(child.constructor.name === 'AssignStmtContext') {
               let primitiveType = child.children[0].getText();
               let objName = child.children[1].getText();
               let objValues = child.children[3].getText();
-              if(child.children[0].constructor.name === 'PrimitiveEntityContext'){
+
+            if(child.children[0].constructor.name === 'PrimitiveEntityContext'){
+
                 let obj = {
                   name: objName,
                   type: primitiveType,
                   values: JSON.parse(objValues)
                 }
-
                 this.objects[objName] = obj;
               }
+
+              if(child.children[3].constructor.name === 'ArrContext'){
+                let arrValues = child.children[3].getText().slice(1, -1).split(',');
+                
+                let arr = {
+                  name: objName,
+                  type: "array",
+                  values: arrValues.map(value=>{
+                    if(this.objects[value]){
+                      return this.objects[value].values;
+                    }
+                    if(this.arrays[value]){
+                      return this.arrays[value].values;
+                    }
+                    if(this.relations[value]){
+                      return this.relations[value].values;
+                    }
+                  })
+                }
+                this.arrays[objName] = arr;
+            }
+
             }
             if(child.constructor.name === 'RelationStmtContext'){
               let primitiveType = child.children[0].getText();
@@ -67,19 +77,16 @@ class Visitor {
               let relationName = child.children[5].getText();
               let relationValue = child.children[7].getText();
 
-              console.log(child.children[0].getText());
               let relation = {
                 name: relationName,
                 type: primitiveType,
                 entity1: relationENT1,
                 entity2: relationENT2,
                 values: JSON.parse(relationValue)
-
               }
 
               this.relations[relationName] = relation;
-
-          }
+            }
             if(child.constructor.name === 'PrintStmtContext'){
               let printValue = child.children[1].getText();
 
@@ -90,10 +97,12 @@ class Visitor {
               if(this.relations[printValue]){
                 console.log(this.relations[printValue]);
               }
-              
+              if(this.arrays[printValue]){
+                console.log(this.arrays[printValue]);
+              }
+
+
             }
-
-
             return child.accept(this);
           } else {
             return child.getText();

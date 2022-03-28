@@ -27,8 +27,6 @@
         "entitiy_name": "Paliwo nr2"
     }
 
-
-
     REL CZUJNIK_0001 => KONTENER_0001 as REL_0001 = {
         "name": "Czujnik1 znajduje sie w Kontenerze 1",
         "state": "active"
@@ -80,9 +78,16 @@
     let activities = [POMIAR_TEMPERATURY_0001, POMIAR_TEMPERATURY_0002]
     let events = [ALERT_0001, ALERT_0002]
 
+    
     print KONTENER_0001
     print POMIAR_TEMPERATURY_0001
     print ALERT_0001
-    
     print REL_0001
+    
+    print entities
+    print relations
+    print activities
+    print events
+
+
     

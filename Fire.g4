@@ -10,7 +10,7 @@ stmt:
 ;
 //use REL to represent relational operators
 relationStmt: 'REL' variableName '=>' variableName 'as' variableName '=' value;
-assignStmt: (primitiveEntity | LET) variableName '=' value;
+assignStmt: (primitiveEntity | LET) variableName '=' (arr | value);
 printStmt: PRINT value;
 commentStmt: comment;
 
