@@ -5,12 +5,19 @@ compilationUnit: stmt*;
 stmt:
     assignStmt
     | printStmt
+    | relationStmt
+    | commentStmt
 ;
+//use REL to represent relational operators
+relationStmt: 'REL' variableName '=>' variableName 'as' variableName '=' value;
+assignStmt: (primitiveEntity | LET) variableName '=' value;
+printStmt: PRINT value;
+commentStmt: comment;
 
-assignStmt: LET (variableName | entityObject) EQ (jsonObject | string | arr);
-printStmt: PRINT (jsonObject | string | entityObject | arr);
-
-
+comment
+  :  '#' ~( '\r' | '\n' )*
+  ;
+  
 json
     : jsonObject* EOF
     ;
@@ -20,19 +27,16 @@ jsonObject
     | '{' '}'
     ;
 
-entityObject
-    : (primitiveEntity nameValuePair);
 
 variableName
     : IDENTIFIER
     ;
 
 keyValuePair
-    : IDENTIFIER ':' (value | jsonObject | entityObject)
+    : (IDENTIFIER | STRING) ':' (value | jsonObject)
     ;
-nameValuePair
-    : '-' IDENTIFIER
-    ;
+
+    
 primitiveEntity
     : 'ENT' //entity
     | 'ACT' //activity
@@ -42,12 +46,9 @@ primitiveEntity
 
 
 LET : 'let';
-EQ : '=';
 PRINT : 'print';
+INSIDE : 'inside';
 
-string 
-    : STRING
-    ;
 value
    : STRING
    | NUMBER
@@ -56,7 +57,7 @@ value
    | 'true'
    | 'false'
    | 'null'
-   | entityObject
+   | variableName
    ;
 
 
@@ -68,6 +69,9 @@ arr
 NUMBER
    : '-'? INT ('.' [0-9] +)? EXP?
    ;
+STRING
+   : '"' (ESC | SAFECODEPOINT)* '"'
+   ;
 
 fragment EXP
    : [Ee] [+\-]? INT
@@ -75,10 +79,6 @@ fragment EXP
 
 fragment INT
    : '0' | [1-9] [0-9]*
-   ;
-
-STRING
-   : '"' (ESC | SAFECODEPOINT)* '"'
    ;
 
 fragment ESC

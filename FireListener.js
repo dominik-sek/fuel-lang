@@ -23,6 +23,15 @@ export default class FireListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
+	// Enter a parse tree produced by FireParser#relationStmt.
+	enterRelationStmt(ctx) {
+	}
+
+	// Exit a parse tree produced by FireParser#relationStmt.
+	exitRelationStmt(ctx) {
+	}
+
+
 	// Enter a parse tree produced by FireParser#assignStmt.
 	enterAssignStmt(ctx) {
 	}
@@ -38,6 +47,24 @@ export default class FireListener extends antlr4.tree.ParseTreeListener {
 
 	// Exit a parse tree produced by FireParser#printStmt.
 	exitPrintStmt(ctx) {
+	}
+
+
+	// Enter a parse tree produced by FireParser#commentStmt.
+	enterCommentStmt(ctx) {
+	}
+
+	// Exit a parse tree produced by FireParser#commentStmt.
+	exitCommentStmt(ctx) {
+	}
+
+
+	// Enter a parse tree produced by FireParser#comment.
+	enterComment(ctx) {
+	}
+
+	// Exit a parse tree produced by FireParser#comment.
+	exitComment(ctx) {
 	}
 
 
@@ -59,15 +86,6 @@ export default class FireListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by FireParser#entityObject.
-	enterEntityObject(ctx) {
-	}
-
-	// Exit a parse tree produced by FireParser#entityObject.
-	exitEntityObject(ctx) {
-	}
-
-
 	// Enter a parse tree produced by FireParser#variableName.
 	enterVariableName(ctx) {
 	}
@@ -86,30 +104,12 @@ export default class FireListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by FireParser#nameValuePair.
-	enterNameValuePair(ctx) {
-	}
-
-	// Exit a parse tree produced by FireParser#nameValuePair.
-	exitNameValuePair(ctx) {
-	}
-
-
 	// Enter a parse tree produced by FireParser#primitiveEntity.
 	enterPrimitiveEntity(ctx) {
 	}
 
 	// Exit a parse tree produced by FireParser#primitiveEntity.
 	exitPrimitiveEntity(ctx) {
-	}
-
-
-	// Enter a parse tree produced by FireParser#string.
-	enterString(ctx) {
-	}
-
-	// Exit a parse tree produced by FireParser#string.
-	exitString(ctx) {
 	}
 
 
