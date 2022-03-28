@@ -80,14 +80,8 @@
 
     
     print KONTENER_0001
-    print POMIAR_TEMPERATURY_0001
-    print ALERT_0001
-    print REL_0001
-    
-    print entities
-    print relations
-    print activities
-    print events
+
+
 
 
     

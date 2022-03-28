@@ -23,7 +23,16 @@ class Visitor {
    arrays = {};
 
 
+
     visitChildren(ctx) {
+      
+      // handle error
+      if(!ctx.children){
+        let line = ctx.start.line;
+        let column = ctx.start.column;
+        let message = ctx.message;
+        console.log(`Error at line ${line} column ${column} : ${message}`);
+      }
 
       if (!ctx) {
         return;
@@ -31,7 +40,7 @@ class Visitor {
       if (ctx.children) {
         return ctx.children.map(child => {
           if (child.children && child.children.length !== 0) {
-            // if child is assignment and array
+           
             if(child.constructor.name === 'AssignStmtContext') {
               let primitiveType = child.children[0].getText();
               let objName = child.children[1].getText();
@@ -103,6 +112,7 @@ class Visitor {
 
 
             }
+
             return child.accept(this);
           } else {
             return child.getText();
@@ -113,5 +123,3 @@ class Visitor {
     }
 }
 tree.accept(new Visitor());
-
-
