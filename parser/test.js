@@ -13,6 +13,7 @@ const inputFile = () =>{
 const parseInput = (inputFromEditor) =>{
     let input = inputFile();
     var chars = new antlr4.InputStream(input);
+    console.log(chars)
     var lexer = new FireLexer(chars);
     var tokens  = new antlr4.CommonTokenStream(lexer);
     var parser = new FireParser(tokens);

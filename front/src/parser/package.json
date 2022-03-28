@@ -1,7 +1,0 @@
-{
-   "type": "module",
-   "dependencies": {
-      "antlr4": "^4.9.0",
-      "node-fetch": "^3.2.3"
-   }
-}
