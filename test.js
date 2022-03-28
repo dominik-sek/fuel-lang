@@ -6,11 +6,23 @@ import * as fs from 'fs';
 import { parse } from 'path';
 
 
+<<<<<<< HEAD
 const inputFile = () =>{
     let input = fs.readFileSync('./test.fuel', 'utf8');
     return input;
 }
     var chars = new antlr4.InputStream(inputFile());
+=======
+
+
+    let entities = [ENT-ZAKLAD_0001, ENT-SENSOR_0001, ENT-JEDN_ALARM_0001]
+    print ENT-ZAKLAD_0001
+    print ENT-SENSOR_0001
+
+     `;
+
+    var chars = new antlr4.InputStream(input);
+>>>>>>> 4ed0755999616406f84e131d548c72ac18076eb9
     var lexer = new FireLexer(chars);
     var tokens  = new antlr4.CommonTokenStream(lexer);
     var parser = new FireParser(tokens);
