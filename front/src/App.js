@@ -43,7 +43,7 @@ function App() {
   let visitor = new Visitor();
   tree.accept(visitor);
   let printables = visitor.getPrintables();
-
+  console.log(parser.getNumberOfSyntaxErrors())
 
   return (
     <Container>
