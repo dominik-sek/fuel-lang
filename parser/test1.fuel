@@ -1,0 +1,9 @@
+
+ENT KONTENER_0001 = {
+    "entity_type": "Kontener",
+    "entitiy_name": "Kontener nr1"
+}
+
+lte arr = [1,2,3]
+print arr
+pirnt KONTENER_0001

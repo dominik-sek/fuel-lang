@@ -1,7 +1,7 @@
 
 grammar Fire;
 
-compilationUnit: stmt*;
+compilationUnit: stmt* EOF;
 stmt:
     assignStmt
     | printStmt
@@ -39,7 +39,6 @@ primitiveEntity
     | 'EVT' //event
     | 'REL' //relation
     ;
-
 
 
 LET : 'let';

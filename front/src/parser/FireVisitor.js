@@ -4,16 +4,9 @@ export default class Visitor {
     arrays = {};
 
     printables = [];
+    allowedPrefixes = ['ent','rel','evt','act','let']
 
     visitChildren(ctx) {
-
-        if(!ctx.children){
-             let line = ctx.start.line;
-             let column = ctx.start.column;
-             let message = ctx.message;
-             console.log(`Error at line ${line} column ${column} : ${message}`);
-           }
-
         if (!ctx) {
             return;
         }
@@ -22,15 +15,22 @@ export default class Visitor {
                 if (child.children && child.children.length !== 0) {
 
                     if (child.constructor.name === 'AssignStmtContext') {
-                        let primitiveType = child.children[0].text;
+                        let prefix = child.children[0].text;
                         let objName = child.children[1].text;
                         let objValues = child.children[3].text;
+                        
+                        if(!this.allowedPrefixes.includes(prefix.toLowerCase())){
+                            let line = ctx.start.line;
+                            let column = ctx.start.column;
+                            let message = `${prefix} is not a valid prefix.`;
+                            console.log(`${line}:${column}: ${message}`);
+                        }
 
                         if (child.children[0].constructor.name === 'PrimitiveEntityContext') {
 
                             let obj = {
                                 name: objName,
-                                type: primitiveType,
+                                type: prefix,
                                 values: JSON.parse(objValues)
                             }
                             this.objects[objName] = obj;
@@ -52,6 +52,7 @@ export default class Visitor {
                                     if (this.relations[value]) {
                                         return this.relations[value].values;
                                     }
+                                    return value;
                                 })
                             }
                             this.arrays[objName] = arr;
@@ -59,7 +60,7 @@ export default class Visitor {
 
                     }
                     if (child.constructor.name === 'RelationStmtContext') {
-                        let primitiveType = child.children[0].text;
+                        let prefix = child.children[0].text;
                         let relationENT1 = child.children[1].text;
                         let relationType = child.children[2].text;
                         let relationENT2 = child.children[3].text;
@@ -68,7 +69,7 @@ export default class Visitor {
 
                         let relation = {
                             name: relationName,
-                            type: primitiveType,
+                            type: prefix,
                             entity1: relationENT1,
                             entity2: relationENT2,
                             values: JSON.parse(relationValue)
@@ -82,7 +83,6 @@ export default class Visitor {
                         if (this.objects[printValue]) {
                             this.setPrintables(this.objects[printValue]);
                         }
-
                         if (this.relations[printValue]) {
                             this.setPrintables(this.relations[printValue]);
                         }
@@ -109,12 +109,10 @@ export default class Visitor {
     getArrays() {
         return this.arrays;
     }
-
-    setPrintables(printable){
-        this.printables.push(printable);
-    }
     getPrintables(){
         return this.printables;
     }
-
+    setPrintables(printable){
+        this.printables.push(printable);
+    }
 }

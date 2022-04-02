@@ -50,24 +50,6 @@ export default class FireListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by FireParser#commentStmt.
-	enterCommentStmt(ctx) {
-	}
-
-	// Exit a parse tree produced by FireParser#commentStmt.
-	exitCommentStmt(ctx) {
-	}
-
-
-	// Enter a parse tree produced by FireParser#comment.
-	enterComment(ctx) {
-	}
-
-	// Exit a parse tree produced by FireParser#comment.
-	exitComment(ctx) {
-	}
-
-
 	// Enter a parse tree produced by FireParser#json.
 	enterJson(ctx) {
 	}

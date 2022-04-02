@@ -6,12 +6,10 @@ const TerminalLine = (props) => {
     const [type, setType] = useState(props.children.type);
     console.log(props.children)
     return (
-        <Container>
-            <p>{props.children.name} = </p>
+        <Container type={type}>
             {
-                JSON.stringify(props.children.values, null, '\t')
+                <p>{props.children.name } {JSON.stringify(props.children.values, null, '\t')}</p>
             }
-
         </Container>
      );
 }
@@ -20,6 +18,6 @@ const Container = styled.div`
     padding:10px;
     border-bottom:1px solid white;
     background:black;
-    color:greenyellow;
+    color:${props => props.type === 'error' ? 'red' : 'greenyellow'};
 `;
 export default TerminalLine;

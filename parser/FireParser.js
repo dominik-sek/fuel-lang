@@ -4,84 +4,75 @@ import antlr4 from 'antlr4';
 import FireListener from './FireListener.js';
 
 const serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786",
-    "\u5964\u0003\u001c\u0089\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004",
-    "\u0004\t\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t",
-    "\u0007\u0004\b\t\b\u0004\t\t\t\u0004\n\t\n\u0004\u000b\t\u000b\u0004",
-    "\f\t\f\u0004\r\t\r\u0004\u000e\t\u000e\u0004\u000f\t\u000f\u0004\u0010",
-    "\t\u0010\u0003\u0002\u0007\u0002\"\n\u0002\f\u0002\u000e\u0002%\u000b",
-    "\u0002\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0005\u0003+",
-    "\n\u0003\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004",
-    "\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0005\u0003\u0005",
-    "\u0005\u00058\n\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005",
-    "\u0005\u0005>\n\u0005\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0007",
-    "\u0003\u0007\u0003\b\u0003\b\u0007\bG\n\b\f\b\u000e\bJ\u000b\b\u0003",
-    "\t\u0007\tM\n\t\f\t\u000e\tP\u000b\t\u0003\t\u0003\t\u0003\n\u0003\n",
-    "\u0003\n\u0003\n\u0007\nX\n\n\f\n\u000e\n[\u000b\n\u0005\n]\n\n\u0003",
-    "\n\u0003\n\u0003\n\u0005\nb\n\n\u0003\u000b\u0003\u000b\u0003\f\u0003",
-    "\f\u0003\f\u0003\f\u0005\fj\n\f\u0003\r\u0003\r\u0003\u000e\u0003\u000e",
-    "\u0003\u000e\u0003\u000e\u0003\u000e\u0003\u000e\u0003\u000e\u0003\u000e",
-    "\u0005\u000ev\n\u000e\u0003\u000f\u0003\u000f\u0003\u000f\u0003\u000f",
-    "\u0007\u000f|\n\u000f\f\u000f\u000e\u000f\u007f\u000b\u000f\u0003\u000f",
-    "\u0003\u000f\u0003\u000f\u0003\u000f\u0005\u000f\u0085\n\u000f\u0003",
-    "\u0010\u0003\u0010\u0003\u0010\u0002\u0002\u0011\u0002\u0004\u0006\b",
-    "\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u001a\u001c\u001e\u0002\u0006",
-    "\u0003\u0002\b\t\u0003\u0002\u001a\u001b\u0004\u0002\u0003\u0003\u000e",
-    "\u0010\u0003\u0002\u0011\u0012\u0002\u008e\u0002#\u0003\u0002\u0002",
-    "\u0002\u0004*\u0003\u0002\u0002\u0002\u0006,\u0003\u0002\u0002\u0002",
-    "\b7\u0003\u0002\u0002\u0002\n?\u0003\u0002\u0002\u0002\fB\u0003\u0002",
-    "\u0002\u0002\u000eD\u0003\u0002\u0002\u0002\u0010N\u0003\u0002\u0002",
-    "\u0002\u0012a\u0003\u0002\u0002\u0002\u0014c\u0003\u0002\u0002\u0002",
-    "\u0016e\u0003\u0002\u0002\u0002\u0018k\u0003\u0002\u0002\u0002\u001a",
-    "u\u0003\u0002\u0002\u0002\u001c\u0084\u0003\u0002\u0002\u0002\u001e",
-    "\u0086\u0003\u0002\u0002\u0002 \"\u0005\u0004\u0003\u0002! \u0003\u0002",
-    "\u0002\u0002\"%\u0003\u0002\u0002\u0002#!\u0003\u0002\u0002\u0002#$",
-    "\u0003\u0002\u0002\u0002$\u0003\u0003\u0002\u0002\u0002%#\u0003\u0002",
-    "\u0002\u0002&+\u0005\b\u0005\u0002\'+\u0005\n\u0006\u0002(+\u0005\u0006",
-    "\u0004\u0002)+\u0005\f\u0007\u0002*&\u0003\u0002\u0002\u0002*\'\u0003",
-    "\u0002\u0002\u0002*(\u0003\u0002\u0002\u0002*)\u0003\u0002\u0002\u0002",
-    "+\u0005\u0003\u0002\u0002\u0002,-\u0007\u0003\u0002\u0002-.\u0005\u0014",
-    "\u000b\u0002./\u0007\u0004\u0002\u0002/0\u0005\u0014\u000b\u000201\u0007",
-    "\u0005\u0002\u000212\u0005\u0014\u000b\u000223\u0007\u0006\u0002\u0002",
-    "34\u0005\u001a\u000e\u00024\u0007\u0003\u0002\u0002\u000258\u0005\u0018",
-    "\r\u000268\u0007\u0016\u0002\u000275\u0003\u0002\u0002\u000276\u0003",
-    "\u0002\u0002\u000289\u0003\u0002\u0002\u00029:\u0005\u0014\u000b\u0002",
-    ":=\u0007\u0006\u0002\u0002;>\u0005\u001c\u000f\u0002<>\u0005\u001a\u000e",
-    "\u0002=;\u0003\u0002\u0002\u0002=<\u0003\u0002\u0002\u0002>\t\u0003",
-    "\u0002\u0002\u0002?@\u0007\u0017\u0002\u0002@A\u0005\u001a\u000e\u0002",
-    "A\u000b\u0003\u0002\u0002\u0002BC\u0005\u000e\b\u0002C\r\u0003\u0002",
-    "\u0002\u0002DH\u0007\u0007\u0002\u0002EG\n\u0002\u0002\u0002FE\u0003",
-    "\u0002\u0002\u0002GJ\u0003\u0002\u0002\u0002HF\u0003\u0002\u0002\u0002",
-    "HI\u0003\u0002\u0002\u0002I\u000f\u0003\u0002\u0002\u0002JH\u0003\u0002",
-    "\u0002\u0002KM\u0005\u0012\n\u0002LK\u0003\u0002\u0002\u0002MP\u0003",
-    "\u0002\u0002\u0002NL\u0003\u0002\u0002\u0002NO\u0003\u0002\u0002\u0002",
-    "OQ\u0003\u0002\u0002\u0002PN\u0003\u0002\u0002\u0002QR\u0007\u0002\u0002",
-    "\u0003R\u0011\u0003\u0002\u0002\u0002S\\\u0007\n\u0002\u0002TY\u0005",
-    "\u0016\f\u0002UV\u0007\u000b\u0002\u0002VX\u0005\u0016\f\u0002WU\u0003",
-    "\u0002\u0002\u0002X[\u0003\u0002\u0002\u0002YW\u0003\u0002\u0002\u0002",
-    "YZ\u0003\u0002\u0002\u0002Z]\u0003\u0002\u0002\u0002[Y\u0003\u0002\u0002",
-    "\u0002\\T\u0003\u0002\u0002\u0002\\]\u0003\u0002\u0002\u0002]^\u0003",
-    "\u0002\u0002\u0002^b\u0007\f\u0002\u0002_`\u0007\n\u0002\u0002`b\u0007",
-    "\f\u0002\u0002aS\u0003\u0002\u0002\u0002a_\u0003\u0002\u0002\u0002b",
-    "\u0013\u0003\u0002\u0002\u0002cd\u0007\u001b\u0002\u0002d\u0015\u0003",
-    "\u0002\u0002\u0002ef\t\u0003\u0002\u0002fi\u0007\r\u0002\u0002gj\u0005",
-    "\u001a\u000e\u0002hj\u0005\u0012\n\u0002ig\u0003\u0002\u0002\u0002i",
-    "h\u0003\u0002\u0002\u0002j\u0017\u0003\u0002\u0002\u0002kl\t\u0004\u0002",
-    "\u0002l\u0019\u0003\u0002\u0002\u0002mv\u0007\u001a\u0002\u0002nv\u0007",
-    "\u0019\u0002\u0002ov\u0005\u0012\n\u0002pv\u0005\u001c\u000f\u0002q",
-    "v\u0007\u0011\u0002\u0002rv\u0007\u0012\u0002\u0002sv\u0007\u0013\u0002",
-    "\u0002tv\u0005\u0014\u000b\u0002um\u0003\u0002\u0002\u0002un\u0003\u0002",
-    "\u0002\u0002uo\u0003\u0002\u0002\u0002up\u0003\u0002\u0002\u0002uq\u0003",
-    "\u0002\u0002\u0002ur\u0003\u0002\u0002\u0002us\u0003\u0002\u0002\u0002",
-    "ut\u0003\u0002\u0002\u0002v\u001b\u0003\u0002\u0002\u0002wx\u0007\u0014",
-    "\u0002\u0002x}\u0005\u001a\u000e\u0002yz\u0007\u000b\u0002\u0002z|\u0005",
-    "\u001a\u000e\u0002{y\u0003\u0002\u0002\u0002|\u007f\u0003\u0002\u0002",
-    "\u0002}{\u0003\u0002\u0002\u0002}~\u0003\u0002\u0002\u0002~\u0080\u0003",
-    "\u0002\u0002\u0002\u007f}\u0003\u0002\u0002\u0002\u0080\u0081\u0007",
-    "\u0015\u0002\u0002\u0081\u0085\u0003\u0002\u0002\u0002\u0082\u0083\u0007",
-    "\u0014\u0002\u0002\u0083\u0085\u0007\u0015\u0002\u0002\u0084w\u0003",
-    "\u0002\u0002\u0002\u0084\u0082\u0003\u0002\u0002\u0002\u0085\u001d\u0003",
-    "\u0002\u0002\u0002\u0086\u0087\t\u0005\u0002\u0002\u0087\u001f\u0003",
-    "\u0002\u0002\u0002\u000f#*7=HNY\\aiu}\u0084"].join("");
+    "\u5964\u0003\u0019}\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
+    "\t\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007",
+    "\u0004\b\t\b\u0004\t\t\t\u0004\n\t\n\u0004\u000b\t\u000b\u0004\f\t\f",
+    "\u0004\r\t\r\u0004\u000e\t\u000e\u0003\u0002\u0007\u0002\u001e\n\u0002",
+    "\f\u0002\u000e\u0002!\u000b\u0002\u0003\u0002\u0003\u0002\u0003\u0003",
+    "\u0003\u0003\u0003\u0003\u0005\u0003(\n\u0003\u0003\u0004\u0003\u0004",
+    "\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004",
+    "\u0003\u0004\u0003\u0005\u0003\u0005\u0005\u00055\n\u0005\u0003\u0005",
+    "\u0003\u0005\u0003\u0005\u0003\u0005\u0005\u0005;\n\u0005\u0003\u0006",
+    "\u0003\u0006\u0003\u0006\u0003\u0007\u0007\u0007A\n\u0007\f\u0007\u000e",
+    "\u0007D\u000b\u0007\u0003\u0007\u0003\u0007\u0003\b\u0003\b\u0003\b",
+    "\u0003\b\u0007\bL\n\b\f\b\u000e\bO\u000b\b\u0005\bQ\n\b\u0003\b\u0003",
+    "\b\u0003\b\u0005\bV\n\b\u0003\t\u0003\t\u0003\n\u0003\n\u0003\n\u0003",
+    "\n\u0005\n^\n\n\u0003\u000b\u0003\u000b\u0003\f\u0003\f\u0003\f\u0003",
+    "\f\u0003\f\u0003\f\u0003\f\u0003\f\u0005\fj\n\f\u0003\r\u0003\r\u0003",
+    "\r\u0003\r\u0007\rp\n\r\f\r\u000e\rs\u000b\r\u0003\r\u0003\r\u0003\r",
+    "\u0003\r\u0005\ry\n\r\u0003\u000e\u0003\u000e\u0003\u000e\u0002\u0002",
+    "\u000f\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u001a",
+    "\u0002\u0005\u0003\u0002\u0017\u0018\u0004\u0002\u0003\u0003\u000b\r",
+    "\u0003\u0002\u000e\u000f\u0002\u0082\u0002\u001f\u0003\u0002\u0002\u0002",
+    "\u0004\'\u0003\u0002\u0002\u0002\u0006)\u0003\u0002\u0002\u0002\b4\u0003",
+    "\u0002\u0002\u0002\n<\u0003\u0002\u0002\u0002\fB\u0003\u0002\u0002\u0002",
+    "\u000eU\u0003\u0002\u0002\u0002\u0010W\u0003\u0002\u0002\u0002\u0012",
+    "Y\u0003\u0002\u0002\u0002\u0014_\u0003\u0002\u0002\u0002\u0016i\u0003",
+    "\u0002\u0002\u0002\u0018x\u0003\u0002\u0002\u0002\u001az\u0003\u0002",
+    "\u0002\u0002\u001c\u001e\u0005\u0004\u0003\u0002\u001d\u001c\u0003\u0002",
+    "\u0002\u0002\u001e!\u0003\u0002\u0002\u0002\u001f\u001d\u0003\u0002",
+    "\u0002\u0002\u001f \u0003\u0002\u0002\u0002 \"\u0003\u0002\u0002\u0002",
+    "!\u001f\u0003\u0002\u0002\u0002\"#\u0007\u0002\u0002\u0003#\u0003\u0003",
+    "\u0002\u0002\u0002$(\u0005\b\u0005\u0002%(\u0005\n\u0006\u0002&(\u0005",
+    "\u0006\u0004\u0002\'$\u0003\u0002\u0002\u0002\'%\u0003\u0002\u0002\u0002",
+    "\'&\u0003\u0002\u0002\u0002(\u0005\u0003\u0002\u0002\u0002)*\u0007\u0003",
+    "\u0002\u0002*+\u0005\u0010\t\u0002+,\u0007\u0004\u0002\u0002,-\u0005",
+    "\u0010\t\u0002-.\u0007\u0005\u0002\u0002./\u0005\u0010\t\u0002/0\u0007",
+    "\u0006\u0002\u000201\u0005\u0016\f\u00021\u0007\u0003\u0002\u0002\u0002",
+    "25\u0005\u0014\u000b\u000235\u0007\u0013\u0002\u000242\u0003\u0002\u0002",
+    "\u000243\u0003\u0002\u0002\u000256\u0003\u0002\u0002\u000267\u0005\u0010",
+    "\t\u00027:\u0007\u0006\u0002\u00028;\u0005\u0018\r\u00029;\u0005\u0016",
+    "\f\u0002:8\u0003\u0002\u0002\u0002:9\u0003\u0002\u0002\u0002;\t\u0003",
+    "\u0002\u0002\u0002<=\u0007\u0014\u0002\u0002=>\u0005\u0016\f\u0002>",
+    "\u000b\u0003\u0002\u0002\u0002?A\u0005\u000e\b\u0002@?\u0003\u0002\u0002",
+    "\u0002AD\u0003\u0002\u0002\u0002B@\u0003\u0002\u0002\u0002BC\u0003\u0002",
+    "\u0002\u0002CE\u0003\u0002\u0002\u0002DB\u0003\u0002\u0002\u0002EF\u0007",
+    "\u0002\u0002\u0003F\r\u0003\u0002\u0002\u0002GP\u0007\u0007\u0002\u0002",
+    "HM\u0005\u0012\n\u0002IJ\u0007\b\u0002\u0002JL\u0005\u0012\n\u0002K",
+    "I\u0003\u0002\u0002\u0002LO\u0003\u0002\u0002\u0002MK\u0003\u0002\u0002",
+    "\u0002MN\u0003\u0002\u0002\u0002NQ\u0003\u0002\u0002\u0002OM\u0003\u0002",
+    "\u0002\u0002PH\u0003\u0002\u0002\u0002PQ\u0003\u0002\u0002\u0002QR\u0003",
+    "\u0002\u0002\u0002RV\u0007\t\u0002\u0002ST\u0007\u0007\u0002\u0002T",
+    "V\u0007\t\u0002\u0002UG\u0003\u0002\u0002\u0002US\u0003\u0002\u0002",
+    "\u0002V\u000f\u0003\u0002\u0002\u0002WX\u0007\u0018\u0002\u0002X\u0011",
+    "\u0003\u0002\u0002\u0002YZ\t\u0002\u0002\u0002Z]\u0007\n\u0002\u0002",
+    "[^\u0005\u0016\f\u0002\\^\u0005\u000e\b\u0002][\u0003\u0002\u0002\u0002",
+    "]\\\u0003\u0002\u0002\u0002^\u0013\u0003\u0002\u0002\u0002_`\t\u0003",
+    "\u0002\u0002`\u0015\u0003\u0002\u0002\u0002aj\u0007\u0017\u0002\u0002",
+    "bj\u0007\u0016\u0002\u0002cj\u0005\u000e\b\u0002dj\u0005\u0018\r\u0002",
+    "ej\u0007\u000e\u0002\u0002fj\u0007\u000f\u0002\u0002gj\u0007\u0010\u0002",
+    "\u0002hj\u0005\u0010\t\u0002ia\u0003\u0002\u0002\u0002ib\u0003\u0002",
+    "\u0002\u0002ic\u0003\u0002\u0002\u0002id\u0003\u0002\u0002\u0002ie\u0003",
+    "\u0002\u0002\u0002if\u0003\u0002\u0002\u0002ig\u0003\u0002\u0002\u0002",
+    "ih\u0003\u0002\u0002\u0002j\u0017\u0003\u0002\u0002\u0002kl\u0007\u0011",
+    "\u0002\u0002lq\u0005\u0016\f\u0002mn\u0007\b\u0002\u0002np\u0005\u0016",
+    "\f\u0002om\u0003\u0002\u0002\u0002ps\u0003\u0002\u0002\u0002qo\u0003",
+    "\u0002\u0002\u0002qr\u0003\u0002\u0002\u0002rt\u0003\u0002\u0002\u0002",
+    "sq\u0003\u0002\u0002\u0002tu\u0007\u0012\u0002\u0002uy\u0003\u0002\u0002",
+    "\u0002vw\u0007\u0011\u0002\u0002wy\u0007\u0012\u0002\u0002xk\u0003\u0002",
+    "\u0002\u0002xv\u0003\u0002\u0002\u0002y\u0019\u0003\u0002\u0002\u0002",
+    "z{\t\u0004\u0002\u0002{\u001b\u0003\u0002\u0002\u0002\u000e\u001f\'",
+    "4:BMPU]iqx"].join("");
 
 
 const atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -93,19 +84,18 @@ const sharedContextCache = new antlr4.PredictionContextCache();
 export default class FireParser extends antlr4.Parser {
 
     static grammarFileName = "Fire.g4";
-    static literalNames = [ null, "'REL'", "'=>'", "'as'", "'='", "'#'", 
-                            "'\r'", "'\n'", "'{'", "','", "'}'", "':'", 
-                            "'ENT'", "'ACT'", "'EVT'", "'true'", "'false'", 
-                            "'null'", "'['", "']'", "'let'", "'print'", 
-                            "'inside'" ];
+    static literalNames = [ null, "'REL'", "'=>'", "'as'", "'='", "'{'", 
+                            "','", "'}'", "':'", "'ENT'", "'ACT'", "'EVT'", 
+                            "'true'", "'false'", "'null'", "'['", "']'", 
+                            "'let'", "'print'", "'inside'" ];
     static symbolicNames = [ null, null, null, null, null, null, null, null, 
                              null, null, null, null, null, null, null, null, 
-                             null, null, null, null, "LET", "PRINT", "INSIDE", 
-                             "NUMBER", "STRING", "IDENTIFIER", "WS" ];
+                             null, "LET", "PRINT", "INSIDE", "NUMBER", "STRING", 
+                             "IDENTIFIER", "WS" ];
     static ruleNames = [ "compilationUnit", "stmt", "relationStmt", "assignStmt", 
-                         "printStmt", "commentStmt", "comment", "json", 
-                         "jsonObject", "variableName", "keyValuePair", "primitiveEntity", 
-                         "value", "arr", "bool" ];
+                         "printStmt", "json", "jsonObject", "variableName", 
+                         "keyValuePair", "primitiveEntity", "value", "arr", 
+                         "bool" ];
 
     constructor(input) {
         super(input);
@@ -127,16 +117,18 @@ export default class FireParser extends antlr4.Parser {
 	    var _la = 0; // Token type
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 33;
+	        this.state = 29;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
-	        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << FireParser.T__0) | (1 << FireParser.T__4) | (1 << FireParser.T__11) | (1 << FireParser.T__12) | (1 << FireParser.T__13) | (1 << FireParser.LET) | (1 << FireParser.PRINT))) !== 0)) {
-	            this.state = 30;
+	        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << FireParser.T__0) | (1 << FireParser.T__8) | (1 << FireParser.T__9) | (1 << FireParser.T__10) | (1 << FireParser.LET) | (1 << FireParser.PRINT))) !== 0)) {
+	            this.state = 26;
 	            this.stmt();
-	            this.state = 35;
+	            this.state = 31;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	        }
+	        this.state = 32;
+	        this.match(FireParser.EOF);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
 		        localctx.exception = re;
@@ -157,32 +149,26 @@ export default class FireParser extends antlr4.Parser {
 	    let localctx = new StmtContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 2, FireParser.RULE_stmt);
 	    try {
-	        this.state = 40;
+	        this.state = 37;
 	        this._errHandler.sync(this);
 	        var la_ = this._interp.adaptivePredict(this._input,1,this._ctx);
 	        switch(la_) {
 	        case 1:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 36;
+	            this.state = 34;
 	            this.assignStmt();
 	            break;
 
 	        case 2:
 	            this.enterOuterAlt(localctx, 2);
-	            this.state = 37;
+	            this.state = 35;
 	            this.printStmt();
 	            break;
 
 	        case 3:
 	            this.enterOuterAlt(localctx, 3);
-	            this.state = 38;
+	            this.state = 36;
 	            this.relationStmt();
-	            break;
-
-	        case 4:
-	            this.enterOuterAlt(localctx, 4);
-	            this.state = 39;
-	            this.commentStmt();
 	            break;
 
 	        }
@@ -207,21 +193,21 @@ export default class FireParser extends antlr4.Parser {
 	    this.enterRule(localctx, 4, FireParser.RULE_relationStmt);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 42;
+	        this.state = 39;
 	        this.match(FireParser.T__0);
-	        this.state = 43;
+	        this.state = 40;
 	        this.variableName();
-	        this.state = 44;
+	        this.state = 41;
 	        this.match(FireParser.T__1);
-	        this.state = 45;
+	        this.state = 42;
 	        this.variableName();
-	        this.state = 46;
+	        this.state = 43;
 	        this.match(FireParser.T__2);
-	        this.state = 47;
+	        this.state = 44;
 	        this.variableName();
-	        this.state = 48;
+	        this.state = 45;
 	        this.match(FireParser.T__3);
-	        this.state = 49;
+	        this.state = 46;
 	        this.value();
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -244,38 +230,38 @@ export default class FireParser extends antlr4.Parser {
 	    this.enterRule(localctx, 6, FireParser.RULE_assignStmt);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 53;
+	        this.state = 50;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case FireParser.T__0:
-	        case FireParser.T__11:
-	        case FireParser.T__12:
-	        case FireParser.T__13:
-	            this.state = 51;
+	        case FireParser.T__8:
+	        case FireParser.T__9:
+	        case FireParser.T__10:
+	            this.state = 48;
 	            this.primitiveEntity();
 	            break;
 	        case FireParser.LET:
-	            this.state = 52;
+	            this.state = 49;
 	            this.match(FireParser.LET);
 	            break;
 	        default:
 	            throw new antlr4.error.NoViableAltException(this);
 	        }
-	        this.state = 55;
+	        this.state = 52;
 	        this.variableName();
-	        this.state = 56;
+	        this.state = 53;
 	        this.match(FireParser.T__3);
-	        this.state = 59;
+	        this.state = 56;
 	        this._errHandler.sync(this);
 	        var la_ = this._interp.adaptivePredict(this._input,3,this._ctx);
 	        switch(la_) {
 	        case 1:
-	            this.state = 57;
+	            this.state = 54;
 	            this.arr();
 	            break;
 
 	        case 2:
-	            this.state = 58;
+	            this.state = 55;
 	            this.value();
 	            break;
 
@@ -301,77 +287,10 @@ export default class FireParser extends antlr4.Parser {
 	    this.enterRule(localctx, 8, FireParser.RULE_printStmt);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 61;
+	        this.state = 58;
 	        this.match(FireParser.PRINT);
-	        this.state = 62;
+	        this.state = 59;
 	        this.value();
-	    } catch (re) {
-	    	if(re instanceof antlr4.error.RecognitionException) {
-		        localctx.exception = re;
-		        this._errHandler.reportError(this, re);
-		        this._errHandler.recover(this, re);
-		    } else {
-		    	throw re;
-		    }
-	    } finally {
-	        this.exitRule();
-	    }
-	    return localctx;
-	}
-
-
-
-	commentStmt() {
-	    let localctx = new CommentStmtContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 10, FireParser.RULE_commentStmt);
-	    try {
-	        this.enterOuterAlt(localctx, 1);
-	        this.state = 64;
-	        this.comment();
-	    } catch (re) {
-	    	if(re instanceof antlr4.error.RecognitionException) {
-		        localctx.exception = re;
-		        this._errHandler.reportError(this, re);
-		        this._errHandler.recover(this, re);
-		    } else {
-		    	throw re;
-		    }
-	    } finally {
-	        this.exitRule();
-	    }
-	    return localctx;
-	}
-
-
-
-	comment() {
-	    let localctx = new CommentContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 12, FireParser.RULE_comment);
-	    var _la = 0; // Token type
-	    try {
-	        this.enterOuterAlt(localctx, 1);
-	        this.state = 66;
-	        this.match(FireParser.T__4);
-	        this.state = 70;
-	        this._errHandler.sync(this);
-	        var _alt = this._interp.adaptivePredict(this._input,4,this._ctx)
-	        while(_alt!=2 && _alt!=antlr4.atn.ATN.INVALID_ALT_NUMBER) {
-	            if(_alt===1) {
-	                this.state = 67;
-	                _la = this._input.LA(1);
-	                if(_la<=0 || _la===FireParser.T__5 || _la===FireParser.T__6) {
-	                this._errHandler.recoverInline(this);
-	                }
-	                else {
-	                	this._errHandler.reportMatch(this);
-	                    this.consume();
-	                } 
-	            }
-	            this.state = 72;
-	            this._errHandler.sync(this);
-	            _alt = this._interp.adaptivePredict(this._input,4,this._ctx);
-	        }
-
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
 		        localctx.exception = re;
@@ -390,21 +309,21 @@ export default class FireParser extends antlr4.Parser {
 
 	json() {
 	    let localctx = new JsonContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 14, FireParser.RULE_json);
+	    this.enterRule(localctx, 10, FireParser.RULE_json);
 	    var _la = 0; // Token type
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 76;
+	        this.state = 64;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
-	        while(_la===FireParser.T__7) {
-	            this.state = 73;
+	        while(_la===FireParser.T__4) {
+	            this.state = 61;
 	            this.jsonObject();
-	            this.state = 78;
+	            this.state = 66;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	        }
-	        this.state = 79;
+	        this.state = 67;
 	        this.match(FireParser.EOF);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -424,47 +343,47 @@ export default class FireParser extends antlr4.Parser {
 
 	jsonObject() {
 	    let localctx = new JsonObjectContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 16, FireParser.RULE_jsonObject);
+	    this.enterRule(localctx, 12, FireParser.RULE_jsonObject);
 	    var _la = 0; // Token type
 	    try {
-	        this.state = 95;
+	        this.state = 83;
 	        this._errHandler.sync(this);
-	        var la_ = this._interp.adaptivePredict(this._input,8,this._ctx);
+	        var la_ = this._interp.adaptivePredict(this._input,7,this._ctx);
 	        switch(la_) {
 	        case 1:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 81;
-	            this.match(FireParser.T__7);
-	            this.state = 90;
+	            this.state = 69;
+	            this.match(FireParser.T__4);
+	            this.state = 78;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	            if(_la===FireParser.STRING || _la===FireParser.IDENTIFIER) {
-	                this.state = 82;
+	                this.state = 70;
 	                this.keyValuePair();
-	                this.state = 87;
+	                this.state = 75;
 	                this._errHandler.sync(this);
 	                _la = this._input.LA(1);
-	                while(_la===FireParser.T__8) {
-	                    this.state = 83;
-	                    this.match(FireParser.T__8);
-	                    this.state = 84;
+	                while(_la===FireParser.T__5) {
+	                    this.state = 71;
+	                    this.match(FireParser.T__5);
+	                    this.state = 72;
 	                    this.keyValuePair();
-	                    this.state = 89;
+	                    this.state = 77;
 	                    this._errHandler.sync(this);
 	                    _la = this._input.LA(1);
 	                }
 	            }
 
-	            this.state = 92;
-	            this.match(FireParser.T__9);
+	            this.state = 80;
+	            this.match(FireParser.T__6);
 	            break;
 
 	        case 2:
 	            this.enterOuterAlt(localctx, 2);
-	            this.state = 93;
-	            this.match(FireParser.T__7);
-	            this.state = 94;
-	            this.match(FireParser.T__9);
+	            this.state = 81;
+	            this.match(FireParser.T__4);
+	            this.state = 82;
+	            this.match(FireParser.T__6);
 	            break;
 
 	        }
@@ -486,10 +405,10 @@ export default class FireParser extends antlr4.Parser {
 
 	variableName() {
 	    let localctx = new VariableNameContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 18, FireParser.RULE_variableName);
+	    this.enterRule(localctx, 14, FireParser.RULE_variableName);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 97;
+	        this.state = 85;
 	        this.match(FireParser.IDENTIFIER);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -509,11 +428,11 @@ export default class FireParser extends antlr4.Parser {
 
 	keyValuePair() {
 	    let localctx = new KeyValuePairContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 20, FireParser.RULE_keyValuePair);
+	    this.enterRule(localctx, 16, FireParser.RULE_keyValuePair);
 	    var _la = 0; // Token type
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 99;
+	        this.state = 87;
 	        _la = this._input.LA(1);
 	        if(!(_la===FireParser.STRING || _la===FireParser.IDENTIFIER)) {
 	        this._errHandler.recoverInline(this);
@@ -522,19 +441,19 @@ export default class FireParser extends antlr4.Parser {
 	        	this._errHandler.reportMatch(this);
 	            this.consume();
 	        }
-	        this.state = 100;
-	        this.match(FireParser.T__10);
-	        this.state = 103;
+	        this.state = 88;
+	        this.match(FireParser.T__7);
+	        this.state = 91;
 	        this._errHandler.sync(this);
-	        var la_ = this._interp.adaptivePredict(this._input,9,this._ctx);
+	        var la_ = this._interp.adaptivePredict(this._input,8,this._ctx);
 	        switch(la_) {
 	        case 1:
-	            this.state = 101;
+	            this.state = 89;
 	            this.value();
 	            break;
 
 	        case 2:
-	            this.state = 102;
+	            this.state = 90;
 	            this.jsonObject();
 	            break;
 
@@ -557,13 +476,13 @@ export default class FireParser extends antlr4.Parser {
 
 	primitiveEntity() {
 	    let localctx = new PrimitiveEntityContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 22, FireParser.RULE_primitiveEntity);
+	    this.enterRule(localctx, 18, FireParser.RULE_primitiveEntity);
 	    var _la = 0; // Token type
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 105;
+	        this.state = 93;
 	        _la = this._input.LA(1);
-	        if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << FireParser.T__0) | (1 << FireParser.T__11) | (1 << FireParser.T__12) | (1 << FireParser.T__13))) !== 0))) {
+	        if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << FireParser.T__0) | (1 << FireParser.T__8) | (1 << FireParser.T__9) | (1 << FireParser.T__10))) !== 0))) {
 	        this._errHandler.recoverInline(this);
 	        }
 	        else {
@@ -588,49 +507,49 @@ export default class FireParser extends antlr4.Parser {
 
 	value() {
 	    let localctx = new ValueContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 24, FireParser.RULE_value);
+	    this.enterRule(localctx, 20, FireParser.RULE_value);
 	    try {
-	        this.state = 115;
+	        this.state = 103;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case FireParser.STRING:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 107;
+	            this.state = 95;
 	            this.match(FireParser.STRING);
 	            break;
 	        case FireParser.NUMBER:
 	            this.enterOuterAlt(localctx, 2);
-	            this.state = 108;
+	            this.state = 96;
 	            this.match(FireParser.NUMBER);
 	            break;
-	        case FireParser.T__7:
+	        case FireParser.T__4:
 	            this.enterOuterAlt(localctx, 3);
-	            this.state = 109;
+	            this.state = 97;
 	            this.jsonObject();
 	            break;
-	        case FireParser.T__17:
+	        case FireParser.T__14:
 	            this.enterOuterAlt(localctx, 4);
-	            this.state = 110;
+	            this.state = 98;
 	            this.arr();
 	            break;
-	        case FireParser.T__14:
+	        case FireParser.T__11:
 	            this.enterOuterAlt(localctx, 5);
-	            this.state = 111;
-	            this.match(FireParser.T__14);
+	            this.state = 99;
+	            this.match(FireParser.T__11);
 	            break;
-	        case FireParser.T__15:
+	        case FireParser.T__12:
 	            this.enterOuterAlt(localctx, 6);
-	            this.state = 112;
-	            this.match(FireParser.T__15);
+	            this.state = 100;
+	            this.match(FireParser.T__12);
 	            break;
-	        case FireParser.T__16:
+	        case FireParser.T__13:
 	            this.enterOuterAlt(localctx, 7);
-	            this.state = 113;
-	            this.match(FireParser.T__16);
+	            this.state = 101;
+	            this.match(FireParser.T__13);
 	            break;
 	        case FireParser.IDENTIFIER:
 	            this.enterOuterAlt(localctx, 8);
-	            this.state = 114;
+	            this.state = 102;
 	            this.variableName();
 	            break;
 	        default:
@@ -654,41 +573,41 @@ export default class FireParser extends antlr4.Parser {
 
 	arr() {
 	    let localctx = new ArrContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 26, FireParser.RULE_arr);
+	    this.enterRule(localctx, 22, FireParser.RULE_arr);
 	    var _la = 0; // Token type
 	    try {
-	        this.state = 130;
+	        this.state = 118;
 	        this._errHandler.sync(this);
-	        var la_ = this._interp.adaptivePredict(this._input,12,this._ctx);
+	        var la_ = this._interp.adaptivePredict(this._input,11,this._ctx);
 	        switch(la_) {
 	        case 1:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 117;
-	            this.match(FireParser.T__17);
-	            this.state = 118;
+	            this.state = 105;
+	            this.match(FireParser.T__14);
+	            this.state = 106;
 	            this.value();
-	            this.state = 123;
+	            this.state = 111;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
-	            while(_la===FireParser.T__8) {
-	                this.state = 119;
-	                this.match(FireParser.T__8);
-	                this.state = 120;
+	            while(_la===FireParser.T__5) {
+	                this.state = 107;
+	                this.match(FireParser.T__5);
+	                this.state = 108;
 	                this.value();
-	                this.state = 125;
+	                this.state = 113;
 	                this._errHandler.sync(this);
 	                _la = this._input.LA(1);
 	            }
-	            this.state = 126;
-	            this.match(FireParser.T__18);
+	            this.state = 114;
+	            this.match(FireParser.T__15);
 	            break;
 
 	        case 2:
 	            this.enterOuterAlt(localctx, 2);
-	            this.state = 128;
-	            this.match(FireParser.T__17);
-	            this.state = 129;
-	            this.match(FireParser.T__18);
+	            this.state = 116;
+	            this.match(FireParser.T__14);
+	            this.state = 117;
+	            this.match(FireParser.T__15);
 	            break;
 
 	        }
@@ -710,13 +629,13 @@ export default class FireParser extends antlr4.Parser {
 
 	bool() {
 	    let localctx = new BoolContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 28, FireParser.RULE_bool);
+	    this.enterRule(localctx, 24, FireParser.RULE_bool);
 	    var _la = 0; // Token type
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 132;
+	        this.state = 120;
 	        _la = this._input.LA(1);
-	        if(!(_la===FireParser.T__14 || _la===FireParser.T__15)) {
+	        if(!(_la===FireParser.T__11 || _la===FireParser.T__12)) {
 	        this._errHandler.recoverInline(this);
 	        }
 	        else {
@@ -757,32 +676,27 @@ FireParser.T__12 = 13;
 FireParser.T__13 = 14;
 FireParser.T__14 = 15;
 FireParser.T__15 = 16;
-FireParser.T__16 = 17;
-FireParser.T__17 = 18;
-FireParser.T__18 = 19;
-FireParser.LET = 20;
-FireParser.PRINT = 21;
-FireParser.INSIDE = 22;
-FireParser.NUMBER = 23;
-FireParser.STRING = 24;
-FireParser.IDENTIFIER = 25;
-FireParser.WS = 26;
+FireParser.LET = 17;
+FireParser.PRINT = 18;
+FireParser.INSIDE = 19;
+FireParser.NUMBER = 20;
+FireParser.STRING = 21;
+FireParser.IDENTIFIER = 22;
+FireParser.WS = 23;
 
 FireParser.RULE_compilationUnit = 0;
 FireParser.RULE_stmt = 1;
 FireParser.RULE_relationStmt = 2;
 FireParser.RULE_assignStmt = 3;
 FireParser.RULE_printStmt = 4;
-FireParser.RULE_commentStmt = 5;
-FireParser.RULE_comment = 6;
-FireParser.RULE_json = 7;
-FireParser.RULE_jsonObject = 8;
-FireParser.RULE_variableName = 9;
-FireParser.RULE_keyValuePair = 10;
-FireParser.RULE_primitiveEntity = 11;
-FireParser.RULE_value = 12;
-FireParser.RULE_arr = 13;
-FireParser.RULE_bool = 14;
+FireParser.RULE_json = 5;
+FireParser.RULE_jsonObject = 6;
+FireParser.RULE_variableName = 7;
+FireParser.RULE_keyValuePair = 8;
+FireParser.RULE_primitiveEntity = 9;
+FireParser.RULE_value = 10;
+FireParser.RULE_arr = 11;
+FireParser.RULE_bool = 12;
 
 class CompilationUnitContext extends antlr4.ParserRuleContext {
 
@@ -797,6 +711,10 @@ class CompilationUnitContext extends antlr4.ParserRuleContext {
         this.parser = parser;
         this.ruleIndex = FireParser.RULE_compilationUnit;
     }
+
+	EOF() {
+	    return this.getToken(FireParser.EOF, 0);
+	};
 
 	stmt = function(i) {
 	    if(i===undefined) {
@@ -850,10 +768,6 @@ class StmtContext extends antlr4.ParserRuleContext {
 
 	relationStmt() {
 	    return this.getTypedRuleContext(RelationStmtContext,0);
-	};
-
-	commentStmt() {
-	    return this.getTypedRuleContext(CommentStmtContext,0);
 	};
 
 	enterRule(listener) {
@@ -1001,73 +915,6 @@ class PrintStmtContext extends antlr4.ParserRuleContext {
 	exitRule(listener) {
 	    if(listener instanceof FireListener ) {
 	        listener.exitPrintStmt(this);
-		}
-	}
-
-
-}
-
-
-
-class CommentStmtContext extends antlr4.ParserRuleContext {
-
-    constructor(parser, parent, invokingState) {
-        if(parent===undefined) {
-            parent = null;
-        }
-        if(invokingState===undefined || invokingState===null) {
-            invokingState = -1;
-        }
-        super(parent, invokingState);
-        this.parser = parser;
-        this.ruleIndex = FireParser.RULE_commentStmt;
-    }
-
-	comment() {
-	    return this.getTypedRuleContext(CommentContext,0);
-	};
-
-	enterRule(listener) {
-	    if(listener instanceof FireListener ) {
-	        listener.enterCommentStmt(this);
-		}
-	}
-
-	exitRule(listener) {
-	    if(listener instanceof FireListener ) {
-	        listener.exitCommentStmt(this);
-		}
-	}
-
-
-}
-
-
-
-class CommentContext extends antlr4.ParserRuleContext {
-
-    constructor(parser, parent, invokingState) {
-        if(parent===undefined) {
-            parent = null;
-        }
-        if(invokingState===undefined || invokingState===null) {
-            invokingState = -1;
-        }
-        super(parent, invokingState);
-        this.parser = parser;
-        this.ruleIndex = FireParser.RULE_comment;
-    }
-
-
-	enterRule(listener) {
-	    if(listener instanceof FireListener ) {
-	        listener.enterComment(this);
-		}
-	}
-
-	exitRule(listener) {
-	    if(listener instanceof FireListener ) {
-	        listener.exitComment(this);
 		}
 	}
 
@@ -1409,8 +1256,6 @@ FireParser.StmtContext = StmtContext;
 FireParser.RelationStmtContext = RelationStmtContext; 
 FireParser.AssignStmtContext = AssignStmtContext; 
 FireParser.PrintStmtContext = PrintStmtContext; 
-FireParser.CommentStmtContext = CommentStmtContext; 
-FireParser.CommentContext = CommentContext; 
 FireParser.JsonContext = JsonContext; 
 FireParser.JsonObjectContext = JsonObjectContext; 
 FireParser.VariableNameContext = VariableNameContext; 

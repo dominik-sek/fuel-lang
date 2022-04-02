@@ -5,12 +5,13 @@ import React, { useState, useEffect } from 'react';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
-import { ANTLRInputStream, CommonTokenStream } from 'antlr4ts';
+import { ANTLRInputStream, CommonTokenStream, Lexer, Parser, ANTLRErrorListener, Recognizer } from 'antlr4ts';
 import { FireLexer } from './parser/FireLexer.ts'
 import { FireParser } from './parser/FireParser.ts'
 import  Visitor  from './parser/FireVisitor';
 import styled from 'styled-components';
 import TerminalLine from './components/TerminalLine';
+import {FireErrorListener} from './parser/FireErrorListener.ts';
 
 let codeString = ``;
 let codeQueueString = ``;
@@ -19,6 +20,8 @@ let codeQueueString = ``;
 function App() {
   const [code, setCode] = useState(codeString);
   const [codeQueue, setCodeQueue] = useState(codeQueueString);
+  const [error, setError] = useState('');
+
   const pushQueue = () => {
     //scroll to top
     document.body.scrollTop = document.documentElement.scrollTop = 0;
@@ -29,13 +32,18 @@ function App() {
   let lexer = new FireLexer(chars);
   let tokens  = new CommonTokenStream(lexer);
   let parser = new FireParser(tokens);
+
+  parser.removeErrorListeners();
+  parser.addErrorListener(new FireErrorListener())
+  lexer.removeErrorListeners();
+  lexer.addErrorListener(new FireErrorListener()) 
+
   parser.buildParseTrees = true;
   let tree = parser.compilationUnit();
   let visitor = new Visitor();
-  
   tree.accept(visitor);
   let printables = visitor.getPrintables();
-  let terminalLines = []
+
 
   return (
     <Container>
@@ -55,7 +63,7 @@ function App() {
       {printables.map((printable, index) => {
         return <TerminalLine key={index}>{printable}</TerminalLine>
       })}
-      
+      <TerminalLine type={error}>{error}</TerminalLine>
     </Terminal>
 </Container>  
 );
