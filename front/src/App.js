@@ -10,6 +10,7 @@ import { FireLexer } from './parser/FireLexer.ts'
 import { FireParser } from './parser/FireParser.ts'
 import  Visitor  from './parser/FireVisitor';
 import styled from 'styled-components';
+import TerminalLine from './components/TerminalLine';
 
 let codeString = ``;
 let codeQueueString = ``;
@@ -19,6 +20,8 @@ function App() {
   const [code, setCode] = useState(codeString);
   const [codeQueue, setCodeQueue] = useState(codeQueueString);
   const pushQueue = () => {
+    //scroll to top
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
     setCode(codeQueue);
   }
 
@@ -32,7 +35,8 @@ function App() {
   
   tree.accept(visitor);
   let printables = visitor.getPrintables();
-  console.log(printables)
+  let terminalLines = []
+
   return (
     <Container>
   <Editor
@@ -49,10 +53,9 @@ function App() {
 
     <Terminal>
       {printables.map((printable, index) => {
-        for(let key in printable){
-          return <p key={index}>{key}: {printable[key]}</p>
-        }
-        })}
+        return <TerminalLine key={index}>{printable}</TerminalLine>
+      })}
+      
     </Terminal>
 </Container>  
 );

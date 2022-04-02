@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-const Terminal = (params) => {
+const Terminal = (props) => {
     return (
         <TerminalContainer>
-            {params.children}
+            {props.children}
         </TerminalContainer>
         );
 }
@@ -11,5 +11,6 @@ const TerminalContainer = styled.div`
     background:black;
     color:greenyellow;
 `
+
 
 export default Terminal;
