@@ -1,4 +1,4 @@
-// Generated from /Users/dominiksek/Documents/fuel-lang/parser/Fire.g4 by ANTLR 4.8
+// Generated from d:\portfolio\fuellang\parser\Fire.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -24,12 +24,12 @@ public class FireParser extends Parser {
 		RULE_compilationUnit = 0, RULE_stmt = 1, RULE_relationStmt = 2, RULE_assignStmt = 3, 
 		RULE_printStmt = 4, RULE_commentStmt = 5, RULE_comment = 6, RULE_json = 7, 
 		RULE_jsonObject = 8, RULE_variableName = 9, RULE_keyValuePair = 10, RULE_primitiveEntity = 11, 
-		RULE_value = 12, RULE_arr = 13, RULE_bool = 14;
+		RULE_let = 12, RULE_value = 13, RULE_arr = 14, RULE_bool = 15;
 	private static String[] makeRuleNames() {
 		return new String[] {
 			"compilationUnit", "stmt", "relationStmt", "assignStmt", "printStmt", 
 			"commentStmt", "comment", "json", "jsonObject", "variableName", "keyValuePair", 
-			"primitiveEntity", "value", "arr", "bool"
+			"primitiveEntity", "let", "value", "arr", "bool"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -120,17 +120,17 @@ public class FireParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(33);
+			setState(35);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__4) | (1L << T__11) | (1L << T__12) | (1L << T__13) | (1L << LET) | (1L << PRINT))) != 0)) {
 				{
 				{
-				setState(30);
+				setState(32);
 				stmt();
 				}
 				}
-				setState(35);
+				setState(37);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -170,34 +170,34 @@ public class FireParser extends Parser {
 		StmtContext _localctx = new StmtContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_stmt);
 		try {
-			setState(40);
+			setState(42);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(36);
+				setState(38);
 				assignStmt();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(37);
+				setState(39);
 				printStmt();
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(38);
+				setState(40);
 				relationStmt();
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(39);
+				setState(41);
 				commentStmt();
 				}
 				break;
@@ -236,21 +236,21 @@ public class FireParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(42);
-			match(T__0);
-			setState(43);
-			variableName();
 			setState(44);
-			match(T__1);
+			match(T__0);
 			setState(45);
 			variableName();
 			setState(46);
-			match(T__2);
+			match(T__1);
 			setState(47);
 			variableName();
 			setState(48);
-			match(T__3);
+			match(T__2);
 			setState(49);
+			variableName();
+			setState(50);
+			match(T__3);
+			setState(51);
 			value();
 			}
 		}
@@ -272,7 +272,9 @@ public class FireParser extends Parser {
 		public PrimitiveEntityContext primitiveEntity() {
 			return getRuleContext(PrimitiveEntityContext.class,0);
 		}
-		public TerminalNode LET() { return getToken(FireParser.LET, 0); }
+		public LetContext let() {
+			return getRuleContext(LetContext.class,0);
+		}
 		public ArrContext arr() {
 			return getRuleContext(ArrContext.class,0);
 		}
@@ -291,7 +293,7 @@ public class FireParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(53);
+			setState(55);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__0:
@@ -299,35 +301,35 @@ public class FireParser extends Parser {
 			case T__12:
 			case T__13:
 				{
-				setState(51);
+				setState(53);
 				primitiveEntity();
 				}
 				break;
 			case LET:
 				{
-				setState(52);
-				match(LET);
+				setState(54);
+				let();
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
-			setState(55);
+			setState(57);
 			variableName();
-			setState(56);
+			setState(58);
 			match(T__3);
-			setState(59);
+			setState(61);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
 			case 1:
 				{
-				setState(57);
+				setState(59);
 				arr();
 				}
 				break;
 			case 2:
 				{
-				setState(58);
+				setState(60);
 				value();
 				}
 				break;
@@ -362,9 +364,9 @@ public class FireParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(61);
+			setState(63);
 			match(PRINT);
-			setState(62);
+			setState(64);
 			value();
 			}
 		}
@@ -395,7 +397,7 @@ public class FireParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(64);
+			setState(66);
 			comment();
 			}
 		}
@@ -425,16 +427,16 @@ public class FireParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(66);
+			setState(68);
 			match(T__4);
-			setState(70);
+			setState(72);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(67);
+					setState(69);
 					_la = _input.LA(1);
 					if ( _la <= 0 || (_la==T__5 || _la==T__6) ) {
 					_errHandler.recoverInline(this);
@@ -447,7 +449,7 @@ public class FireParser extends Parser {
 					}
 					} 
 				}
-				setState(72);
+				setState(74);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
 			}
@@ -485,21 +487,21 @@ public class FireParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(76);
+			setState(78);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__7) {
 				{
 				{
-				setState(73);
+				setState(75);
 				jsonObject();
 				}
 				}
-				setState(78);
+				setState(80);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(79);
+			setState(81);
 			match(EOF);
 			}
 		}
@@ -532,50 +534,50 @@ public class FireParser extends Parser {
 		enterRule(_localctx, 16, RULE_jsonObject);
 		int _la;
 		try {
-			setState(95);
+			setState(97);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(81);
+				setState(83);
 				match(T__7);
-				setState(90);
+				setState(92);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==STRING || _la==IDENTIFIER) {
 					{
-					setState(82);
+					setState(84);
 					keyValuePair();
-					setState(87);
+					setState(89);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 					while (_la==T__8) {
 						{
 						{
-						setState(83);
+						setState(85);
 						match(T__8);
-						setState(84);
+						setState(86);
 						keyValuePair();
 						}
 						}
-						setState(89);
+						setState(91);
 						_errHandler.sync(this);
 						_la = _input.LA(1);
 					}
 					}
 				}
 
-				setState(92);
+				setState(94);
 				match(T__9);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(93);
+				setState(95);
 				match(T__7);
-				setState(94);
+				setState(96);
 				match(T__9);
 				}
 				break;
@@ -606,7 +608,7 @@ public class FireParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(97);
+			setState(99);
 			match(IDENTIFIER);
 			}
 		}
@@ -643,7 +645,7 @@ public class FireParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(99);
+			setState(101);
 			_la = _input.LA(1);
 			if ( !(_la==STRING || _la==IDENTIFIER) ) {
 			_errHandler.recoverInline(this);
@@ -653,20 +655,20 @@ public class FireParser extends Parser {
 				_errHandler.reportMatch(this);
 				consume();
 			}
-			setState(100);
+			setState(102);
 			match(T__10);
-			setState(103);
+			setState(105);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
 			case 1:
 				{
-				setState(101);
+				setState(103);
 				value();
 				}
 				break;
 			case 2:
 				{
-				setState(102);
+				setState(104);
 				jsonObject();
 				}
 				break;
@@ -698,7 +700,7 @@ public class FireParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(105);
+			setState(107);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__11) | (1L << T__12) | (1L << T__13))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -708,6 +710,35 @@ public class FireParser extends Parser {
 				_errHandler.reportMatch(this);
 				consume();
 			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class LetContext extends ParserRuleContext {
+		public TerminalNode LET() { return getToken(FireParser.LET, 0); }
+		public LetContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_let; }
+	}
+
+	public final LetContext let() throws RecognitionException {
+		LetContext _localctx = new LetContext(_ctx, getState());
+		enterRule(_localctx, 24, RULE_let);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(109);
+			match(LET);
 			}
 		}
 		catch (RecognitionException re) {
@@ -741,64 +772,64 @@ public class FireParser extends Parser {
 
 	public final ValueContext value() throws RecognitionException {
 		ValueContext _localctx = new ValueContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_value);
+		enterRule(_localctx, 26, RULE_value);
 		try {
-			setState(115);
+			setState(119);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case STRING:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(107);
+				setState(111);
 				match(STRING);
 				}
 				break;
 			case NUMBER:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(108);
+				setState(112);
 				match(NUMBER);
 				}
 				break;
 			case T__7:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(109);
+				setState(113);
 				jsonObject();
 				}
 				break;
 			case T__17:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(110);
+				setState(114);
 				arr();
 				}
 				break;
 			case T__14:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(111);
+				setState(115);
 				match(T__14);
 				}
 				break;
 			case T__15:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(112);
+				setState(116);
 				match(T__15);
 				}
 				break;
 			case T__16:
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(113);
+				setState(117);
 				match(T__16);
 				}
 				break;
 			case IDENTIFIER:
 				enterOuterAlt(_localctx, 8);
 				{
-				setState(114);
+				setState(118);
 				variableName();
 				}
 				break;
@@ -832,45 +863,45 @@ public class FireParser extends Parser {
 
 	public final ArrContext arr() throws RecognitionException {
 		ArrContext _localctx = new ArrContext(_ctx, getState());
-		enterRule(_localctx, 26, RULE_arr);
+		enterRule(_localctx, 28, RULE_arr);
 		int _la;
 		try {
-			setState(130);
+			setState(134);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,12,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(117);
+				setState(121);
 				match(T__17);
-				setState(118);
+				setState(122);
 				value();
-				setState(123);
+				setState(127);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==T__8) {
 					{
 					{
-					setState(119);
+					setState(123);
 					match(T__8);
-					setState(120);
+					setState(124);
 					value();
 					}
 					}
-					setState(125);
+					setState(129);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(126);
+				setState(130);
 				match(T__18);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(128);
+				setState(132);
 				match(T__17);
-				setState(129);
+				setState(133);
 				match(T__18);
 				}
 				break;
@@ -896,12 +927,12 @@ public class FireParser extends Parser {
 
 	public final BoolContext bool() throws RecognitionException {
 		BoolContext _localctx = new BoolContext(_ctx, getState());
-		enterRule(_localctx, 28, RULE_bool);
+		enterRule(_localctx, 30, RULE_bool);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(132);
+			setState(136);
 			_la = _input.LA(1);
 			if ( !(_la==T__14 || _la==T__15) ) {
 			_errHandler.recoverInline(this);
@@ -925,41 +956,43 @@ public class FireParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\34\u0089\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\34\u008d\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
-		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\3\2\7\2\"\n\2\f\2"+
-		"\16\2%\13\2\3\3\3\3\3\3\3\3\5\3+\n\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
-		"\4\3\5\3\5\5\58\n\5\3\5\3\5\3\5\3\5\5\5>\n\5\3\6\3\6\3\6\3\7\3\7\3\b\3"+
-		"\b\7\bG\n\b\f\b\16\bJ\13\b\3\t\7\tM\n\t\f\t\16\tP\13\t\3\t\3\t\3\n\3\n"+
-		"\3\n\3\n\7\nX\n\n\f\n\16\n[\13\n\5\n]\n\n\3\n\3\n\3\n\5\nb\n\n\3\13\3"+
-		"\13\3\f\3\f\3\f\3\f\5\fj\n\f\3\r\3\r\3\16\3\16\3\16\3\16\3\16\3\16\3\16"+
-		"\3\16\5\16v\n\16\3\17\3\17\3\17\3\17\7\17|\n\17\f\17\16\17\177\13\17\3"+
-		"\17\3\17\3\17\3\17\5\17\u0085\n\17\3\20\3\20\3\20\2\2\21\2\4\6\b\n\f\16"+
-		"\20\22\24\26\30\32\34\36\2\6\3\2\b\t\3\2\32\33\4\2\3\3\16\20\3\2\21\22"+
-		"\2\u008e\2#\3\2\2\2\4*\3\2\2\2\6,\3\2\2\2\b\67\3\2\2\2\n?\3\2\2\2\fB\3"+
-		"\2\2\2\16D\3\2\2\2\20N\3\2\2\2\22a\3\2\2\2\24c\3\2\2\2\26e\3\2\2\2\30"+
-		"k\3\2\2\2\32u\3\2\2\2\34\u0084\3\2\2\2\36\u0086\3\2\2\2 \"\5\4\3\2! \3"+
-		"\2\2\2\"%\3\2\2\2#!\3\2\2\2#$\3\2\2\2$\3\3\2\2\2%#\3\2\2\2&+\5\b\5\2\'"+
-		"+\5\n\6\2(+\5\6\4\2)+\5\f\7\2*&\3\2\2\2*\'\3\2\2\2*(\3\2\2\2*)\3\2\2\2"+
-		"+\5\3\2\2\2,-\7\3\2\2-.\5\24\13\2./\7\4\2\2/\60\5\24\13\2\60\61\7\5\2"+
-		"\2\61\62\5\24\13\2\62\63\7\6\2\2\63\64\5\32\16\2\64\7\3\2\2\2\658\5\30"+
-		"\r\2\668\7\26\2\2\67\65\3\2\2\2\67\66\3\2\2\289\3\2\2\29:\5\24\13\2:="+
-		"\7\6\2\2;>\5\34\17\2<>\5\32\16\2=;\3\2\2\2=<\3\2\2\2>\t\3\2\2\2?@\7\27"+
-		"\2\2@A\5\32\16\2A\13\3\2\2\2BC\5\16\b\2C\r\3\2\2\2DH\7\7\2\2EG\n\2\2\2"+
-		"FE\3\2\2\2GJ\3\2\2\2HF\3\2\2\2HI\3\2\2\2I\17\3\2\2\2JH\3\2\2\2KM\5\22"+
-		"\n\2LK\3\2\2\2MP\3\2\2\2NL\3\2\2\2NO\3\2\2\2OQ\3\2\2\2PN\3\2\2\2QR\7\2"+
-		"\2\3R\21\3\2\2\2S\\\7\n\2\2TY\5\26\f\2UV\7\13\2\2VX\5\26\f\2WU\3\2\2\2"+
-		"X[\3\2\2\2YW\3\2\2\2YZ\3\2\2\2Z]\3\2\2\2[Y\3\2\2\2\\T\3\2\2\2\\]\3\2\2"+
-		"\2]^\3\2\2\2^b\7\f\2\2_`\7\n\2\2`b\7\f\2\2aS\3\2\2\2a_\3\2\2\2b\23\3\2"+
-		"\2\2cd\7\33\2\2d\25\3\2\2\2ef\t\3\2\2fi\7\r\2\2gj\5\32\16\2hj\5\22\n\2"+
-		"ig\3\2\2\2ih\3\2\2\2j\27\3\2\2\2kl\t\4\2\2l\31\3\2\2\2mv\7\32\2\2nv\7"+
-		"\31\2\2ov\5\22\n\2pv\5\34\17\2qv\7\21\2\2rv\7\22\2\2sv\7\23\2\2tv\5\24"+
-		"\13\2um\3\2\2\2un\3\2\2\2uo\3\2\2\2up\3\2\2\2uq\3\2\2\2ur\3\2\2\2us\3"+
-		"\2\2\2ut\3\2\2\2v\33\3\2\2\2wx\7\24\2\2x}\5\32\16\2yz\7\13\2\2z|\5\32"+
-		"\16\2{y\3\2\2\2|\177\3\2\2\2}{\3\2\2\2}~\3\2\2\2~\u0080\3\2\2\2\177}\3"+
-		"\2\2\2\u0080\u0081\7\25\2\2\u0081\u0085\3\2\2\2\u0082\u0083\7\24\2\2\u0083"+
-		"\u0085\7\25\2\2\u0084w\3\2\2\2\u0084\u0082\3\2\2\2\u0085\35\3\2\2\2\u0086"+
-		"\u0087\t\5\2\2\u0087\37\3\2\2\2\17#*\67=HNY\\aiu}\u0084";
+		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\3\2\7\2"+
+		"$\n\2\f\2\16\2\'\13\2\3\3\3\3\3\3\3\3\5\3-\n\3\3\4\3\4\3\4\3\4\3\4\3\4"+
+		"\3\4\3\4\3\4\3\5\3\5\5\5:\n\5\3\5\3\5\3\5\3\5\5\5@\n\5\3\6\3\6\3\6\3\7"+
+		"\3\7\3\b\3\b\7\bI\n\b\f\b\16\bL\13\b\3\t\7\tO\n\t\f\t\16\tR\13\t\3\t\3"+
+		"\t\3\n\3\n\3\n\3\n\7\nZ\n\n\f\n\16\n]\13\n\5\n_\n\n\3\n\3\n\3\n\5\nd\n"+
+		"\n\3\13\3\13\3\f\3\f\3\f\3\f\5\fl\n\f\3\r\3\r\3\16\3\16\3\17\3\17\3\17"+
+		"\3\17\3\17\3\17\3\17\3\17\5\17z\n\17\3\20\3\20\3\20\3\20\7\20\u0080\n"+
+		"\20\f\20\16\20\u0083\13\20\3\20\3\20\3\20\3\20\5\20\u0089\n\20\3\21\3"+
+		"\21\3\21\2\2\22\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \2\6\3\2\b\t\3"+
+		"\2\32\33\4\2\3\3\16\20\3\2\21\22\2\u0091\2%\3\2\2\2\4,\3\2\2\2\6.\3\2"+
+		"\2\2\b9\3\2\2\2\nA\3\2\2\2\fD\3\2\2\2\16F\3\2\2\2\20P\3\2\2\2\22c\3\2"+
+		"\2\2\24e\3\2\2\2\26g\3\2\2\2\30m\3\2\2\2\32o\3\2\2\2\34y\3\2\2\2\36\u0088"+
+		"\3\2\2\2 \u008a\3\2\2\2\"$\5\4\3\2#\"\3\2\2\2$\'\3\2\2\2%#\3\2\2\2%&\3"+
+		"\2\2\2&\3\3\2\2\2\'%\3\2\2\2(-\5\b\5\2)-\5\n\6\2*-\5\6\4\2+-\5\f\7\2,"+
+		"(\3\2\2\2,)\3\2\2\2,*\3\2\2\2,+\3\2\2\2-\5\3\2\2\2./\7\3\2\2/\60\5\24"+
+		"\13\2\60\61\7\4\2\2\61\62\5\24\13\2\62\63\7\5\2\2\63\64\5\24\13\2\64\65"+
+		"\7\6\2\2\65\66\5\34\17\2\66\7\3\2\2\2\67:\5\30\r\28:\5\32\16\29\67\3\2"+
+		"\2\298\3\2\2\2:;\3\2\2\2;<\5\24\13\2<?\7\6\2\2=@\5\36\20\2>@\5\34\17\2"+
+		"?=\3\2\2\2?>\3\2\2\2@\t\3\2\2\2AB\7\27\2\2BC\5\34\17\2C\13\3\2\2\2DE\5"+
+		"\16\b\2E\r\3\2\2\2FJ\7\7\2\2GI\n\2\2\2HG\3\2\2\2IL\3\2\2\2JH\3\2\2\2J"+
+		"K\3\2\2\2K\17\3\2\2\2LJ\3\2\2\2MO\5\22\n\2NM\3\2\2\2OR\3\2\2\2PN\3\2\2"+
+		"\2PQ\3\2\2\2QS\3\2\2\2RP\3\2\2\2ST\7\2\2\3T\21\3\2\2\2U^\7\n\2\2V[\5\26"+
+		"\f\2WX\7\13\2\2XZ\5\26\f\2YW\3\2\2\2Z]\3\2\2\2[Y\3\2\2\2[\\\3\2\2\2\\"+
+		"_\3\2\2\2][\3\2\2\2^V\3\2\2\2^_\3\2\2\2_`\3\2\2\2`d\7\f\2\2ab\7\n\2\2"+
+		"bd\7\f\2\2cU\3\2\2\2ca\3\2\2\2d\23\3\2\2\2ef\7\33\2\2f\25\3\2\2\2gh\t"+
+		"\3\2\2hk\7\r\2\2il\5\34\17\2jl\5\22\n\2ki\3\2\2\2kj\3\2\2\2l\27\3\2\2"+
+		"\2mn\t\4\2\2n\31\3\2\2\2op\7\26\2\2p\33\3\2\2\2qz\7\32\2\2rz\7\31\2\2"+
+		"sz\5\22\n\2tz\5\36\20\2uz\7\21\2\2vz\7\22\2\2wz\7\23\2\2xz\5\24\13\2y"+
+		"q\3\2\2\2yr\3\2\2\2ys\3\2\2\2yt\3\2\2\2yu\3\2\2\2yv\3\2\2\2yw\3\2\2\2"+
+		"yx\3\2\2\2z\35\3\2\2\2{|\7\24\2\2|\u0081\5\34\17\2}~\7\13\2\2~\u0080\5"+
+		"\34\17\2\177}\3\2\2\2\u0080\u0083\3\2\2\2\u0081\177\3\2\2\2\u0081\u0082"+
+		"\3\2\2\2\u0082\u0084\3\2\2\2\u0083\u0081\3\2\2\2\u0084\u0085\7\25\2\2"+
+		"\u0085\u0089\3\2\2\2\u0086\u0087\7\24\2\2\u0087\u0089\7\25\2\2\u0088{"+
+		"\3\2\2\2\u0088\u0086\3\2\2\2\u0089\37\3\2\2\2\u008a\u008b\t\5\2\2\u008b"+
+		"!\3\2\2\2\17%,9?JP[^cky\u0081\u0088";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

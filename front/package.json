@@ -22,7 +22,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "antlr4ts": "antlr4ts -visitor ./src/parser/Fire.g4"
+    "antlr4ts": "antlr4ts -o ./src/parser -visitor ./src/parser/Fire.g4"
   },
   "browser": {
     "fs": false,

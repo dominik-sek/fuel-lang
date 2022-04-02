@@ -3,6 +3,8 @@ export default class Visitor {
     relations = {};
     arrays = {};
 
+    printables = [];
+
     visitChildren(ctx) {
 
         if(!ctx.children){
@@ -78,14 +80,14 @@ export default class Visitor {
                         let printValue = child.children[1].text;
 
                         if (this.objects[printValue]) {
-                            console.log(this.objects[printValue]);
+                            this.setPrintables(this.objects[printValue]);
                         }
 
                         if (this.relations[printValue]) {
-                            console.log(this.relations[printValue]);
+                            this.setPrintables(this.relations[printValue]);
                         }
                         if (this.arrays[printValue]) {
-                            console.log(this.arrays[printValue]);
+                            this.setPrintables(this.arrays[printValue]);
                         }
 
                     }
@@ -108,5 +110,11 @@ export default class Visitor {
         return this.arrays;
     }
 
-}
+    setPrintables(printable){
+        this.printables.push(printable);
+    }
+    getPrintables(){
+        return this.printables;
+    }
 
+}

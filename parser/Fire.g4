@@ -9,7 +9,7 @@ stmt:
 ;
 //use REL to represent relational operators
 relationStmt: 'REL' variableName '=>' variableName 'as' variableName '=' value;
-assignStmt: (primitiveEntity | LET) variableName '=' (arr | value);
+assignStmt: (primitiveEntity | let) variableName '=' (arr | value);
 printStmt: PRINT value;
 commentStmt: comment;
 
@@ -43,7 +43,9 @@ primitiveEntity
     | 'REL' //relation
     ;
 
-
+let:
+      'let'
+      ;
 LET : 'let';
 PRINT : 'print';
 INSIDE : 'inside';

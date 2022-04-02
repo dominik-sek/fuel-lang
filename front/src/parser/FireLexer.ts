@@ -1,5 +1,6 @@
 // Generated from ./src/parser/Fire.g4 by ANTLR 4.9.0-SNAPSHOT
 
+
 import { ATN } from "antlr4ts/atn/ATN";
 import { ATNDeserializer } from "antlr4ts/atn/ATNDeserializer";
 import { CharStream } from "antlr4ts/CharStream";
