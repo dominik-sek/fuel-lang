@@ -4,8 +4,8 @@ export default class Visitor {
     arrays = {};
 
     visitChildren(ctx) {
-        // handle error
-           if(!ctx.children){
+
+        if(!ctx.children){
              let line = ctx.start.line;
              let column = ctx.start.column;
              let message = ctx.message;

@@ -21,6 +21,7 @@ function App() {
   parser.buildParseTrees = true;
   let tree = parser.compilationUnit();
   let visitor = new Visitor();
+  
   tree.accept(visitor);
 
 
@@ -34,6 +35,8 @@ function App() {
     style={{
         fontFamily: '"Fira code", "Fira Mono", monospace',
         fontSize: 12,
+        border:"1px solid black",
+        margin:"1rem"
         }}
     
     />

@@ -1,4 +1,3 @@
-
 grammar Fire;
 
 compilationUnit: stmt*;

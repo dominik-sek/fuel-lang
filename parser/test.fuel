@@ -80,3 +80,4 @@
 
     
     print KONTENER_0001
+    print entities
