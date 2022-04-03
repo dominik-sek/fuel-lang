@@ -1,7 +1,7 @@
 .editor{
   background-color: black;
   border-right: 1px solid white;
-  color:white;
+  color: beige;
   min-height: 100vh;
   counter-reset: line;
   font-size: 1.2em;

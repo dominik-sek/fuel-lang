@@ -9,6 +9,7 @@
     "antlr4": "^4.9.3",
     "antlr4-webpack-loader": "^0.1.1",
     "antlr4ts": "^0.5.0-alpha.4",
+    "babel-plugin-prismjs": "^2.1.0",
     "prismjs": "^1.27.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

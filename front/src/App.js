@@ -5,8 +5,8 @@ import React, { useState, useEffect } from 'react';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
-// import "prismjs/themes/prism.css";
-import { ANTLRInputStream, CommonTokenStream, Lexer } from 'antlr4ts';
+import "prismjs/themes/prism-okaidia.css";
+import { ANTLRInputStream, CommonTokenStream } from 'antlr4ts';
 import { FireLexer } from './parser/FireLexer.ts'
 import { FireParser } from './parser/FireParser.ts'
 import  Visitor  from './parser/Visitor.ts';
@@ -21,7 +21,9 @@ let codeQueueString = `TODO:
 `;
 
 
+
 function App() {
+
   const [code, setCode] = useState(codeString);
   const [codeQueue, setCodeQueue] = useState(codeQueueString);
 
@@ -63,7 +65,7 @@ function App() {
     onValueChange={code => setCodeQueue(code)}
     highlight={code => hightlightWithLineNumbers(code, languages.js)}
     padding={10}
-    className="editor"
+    className={`language-javascript editor`}
     />
 
     <CompileButton onClick={()=>pushQueue()}>
