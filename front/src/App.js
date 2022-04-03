@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
-import "prismjs/themes/prism-okaidia.css";
+import "prismjs/themes/prism-dark.css";
 import { ANTLRInputStream, CommonTokenStream } from 'antlr4ts';
 import { FireLexer } from './parser/FireLexer.ts'
 import { FireParser } from './parser/FireParser.ts'
@@ -15,10 +15,7 @@ import TerminalLine from './components/TerminalLine';
 import {FireErrorListener} from './parser/FireErrorListener.ts';
 
 let codeString = ``;
-let codeQueueString = `TODO:
-1) SYNTAX HIGHLIGHTER
-2) IMPLEMENT LOGIC FOR RELATIONS, IF THEN DO
-`;
+let codeQueueString = ``;
 
 
 
@@ -42,6 +39,7 @@ function App() {
   let tree = parser.compilationUnit();
   let visitor = new Visitor();
   visitor.visit(tree);
+  
   let printables = visitor.getPrintables();
   let defineErrors = visitor.getDefineErrors();
   let alertInvocations = visitor.getAlertInvocations();

@@ -70,15 +70,16 @@ export default class Visitor implements FireVisitor<any> {
         if(subject){
             let line = this?.getLineNumber(subject);
                 if(!this.checkIfSubjectIsDefined(subject)){
-                    this.defineErrors.push(`"at line ${line} ${subject.text}" is not defined`);
+                    this.defineErrors.push(`at line ${line} "${subject.text}" is not defined`);
                     return;
                 }
         }
-    });
-        let ifSubjectObject = this.objects[ifSubject?.text];
-        let doSubjectObject = this.objects[doSubject?.text];
+        });
+        
+        let ifSubjectObject = this?.objects[ifSubject?.text];
+        let doSubjectObject = this?.objects[doSubject?.text];
 
-        if(eval(ifSubjectObject.values[ifFieldReference] + operator + number)){
+        if(eval(ifSubjectObject?.values[ifFieldReference] + operator + number)){
              let desc : string;
             for(const relation of Object.entries(this.relations)){
                 if(ifSubjectObject.values.entity === relation[1].entity1){
