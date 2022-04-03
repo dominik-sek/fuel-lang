@@ -5,45 +5,47 @@ import React, { useState, useEffect } from 'react';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
-import { ANTLRInputStream, CommonTokenStream, Lexer, Parser, ANTLRErrorListener, Recognizer } from 'antlr4ts';
+import { ANTLRInputStream, CommonTokenStream } from 'antlr4ts';
 import { FireLexer } from './parser/FireLexer.ts'
 import { FireParser } from './parser/FireParser.ts'
-import  Visitor  from './parser/FireVisitor';
+import  Visitor  from './parser/Visitor.ts';
 import styled from 'styled-components';
 import TerminalLine from './components/TerminalLine';
 import {FireErrorListener} from './parser/FireErrorListener.ts';
 
 let codeString = ``;
-let codeQueueString = ``;
+let codeQueueString = `TODO:
+1) LINE NUMBERS
+2) SYNTAX HIGHLIGHTER
+3) IMPLEMENT LOGIC
+4) FIX RELATIONS
+`;
 
 
 function App() {
   const [code, setCode] = useState(codeString);
   const [codeQueue, setCodeQueue] = useState(codeQueueString);
-  const [error, setError] = useState('');
-
-  const pushQueue = () => {
-    //scroll to top
-    document.body.scrollTop = document.documentElement.scrollTop = 0;
-    setCode(codeQueue);
-  }
 
   let chars = new ANTLRInputStream(code);
   let lexer = new FireLexer(chars);
   let tokens  = new CommonTokenStream(lexer);
   let parser = new FireParser(tokens);
+  let parserErrorListener = new FireErrorListener();
+  let lexerErrorListener = new FireErrorListener();
 
   parser.removeErrorListeners();
-  parser.addErrorListener(new FireErrorListener())
+  parser.addErrorListener(parserErrorListener)
   lexer.removeErrorListeners();
-  lexer.addErrorListener(new FireErrorListener()) 
-
+  lexer.addErrorListener(lexerErrorListener)
   parser.buildParseTrees = true;
   let tree = parser.compilationUnit();
   let visitor = new Visitor();
-  tree.accept(visitor);
+  visitor.visit(tree);
   let printables = visitor.getPrintables();
-  console.log(parser.getNumberOfSyntaxErrors())
+  const pushQueue = () => {
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+    setCode(codeQueue);
+  }
 
   return (
     <Container>
@@ -63,7 +65,12 @@ function App() {
       {printables.map((printable, index) => {
         return <TerminalLine key={index}>{printable}</TerminalLine>
       })}
-      <TerminalLine type={error}>{error}</TerminalLine>
+      {parserErrorListener.errorMessages.map((error, index) => {
+        return <TerminalLine type={'err'} key={index}>{error}</TerminalLine>
+      })}
+      {lexerErrorListener.errorMessages.map((error, index) => {
+        return <TerminalLine type={'err'} key={index}>{error}</TerminalLine>
+      })}
     </Terminal>
 </Container>  
 );

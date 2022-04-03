@@ -1,16 +1,47 @@
-export default class Visitor {
+import { ErrorNode } from "antlr4ts/tree/ErrorNode";
+import { ParseTree } from "antlr4ts/tree/ParseTree";
+import { TerminalNode } from "antlr4ts/tree/TerminalNode";
+import {ANTLRErrorListener} from "antlr4ts";
+import { CompilationUnitContext, StmtContext, RelationStmtContext, AssignStmtContext, PrintStmtContext, JsonContext, JsonObjectContext, VariableNameContext, KeyValuePairContext, PrimitiveEntityContext, ValueContext, ArrContext, BoolContext } from "./FireParser";
+import { FireVisitor } from "./FireVisitor";
+
+export default class Visitor implements FireVisitor<any> {
+    visitCompilationUnit?: (ctx: CompilationUnitContext) => any;
+    visitStmt?: (ctx: StmtContext) => any;
+    visitRelationStmt?: (ctx: RelationStmtContext) => any;
+    visitAssignStmt?: (ctx: AssignStmtContext) => any;
+    visitPrintStmt?: (ctx: PrintStmtContext) => any;
+    visitJson?: (ctx: JsonContext) => any;
+    visitJsonObject?: (ctx: JsonObjectContext) => any;
+    visitVariableName?: (ctx: VariableNameContext) => any;
+    visitKeyValuePair?: (ctx: KeyValuePairContext) => any;
+    visitPrimitiveEntity?: (ctx: PrimitiveEntityContext) => any;
+    visitValue?: (ctx: ValueContext) => any;
+    visitArr?: (ctx: ArrContext) => any;
+    visitBool?: (ctx: BoolContext) => any;
+    visit(tree: ParseTree) {
+        return tree.accept(this);
+    }
+    visitTerminal(node: TerminalNode) {
+        throw new Error("Method not implemented.");
+    }
+    visitErrorNode(node: ErrorNode) {
+        throw new Error("Method not implemented.");
+    }
     objects = {};
     relations = {};
     arrays = {};
 
     printables = [];
-    allowedPrefixes = ['ent','rel','evt','act','let']
+
 
     visitChildren(ctx) {
         if (!ctx) {
             return;
         }
         if (ctx.children) {
+            
+            
             return ctx.children.map(child => {
                 if (child.children && child.children.length !== 0) {
 
@@ -18,13 +49,6 @@ export default class Visitor {
                         let prefix = child.children[0].text;
                         let objName = child.children[1].text;
                         let objValues = child.children[3].text;
-                        
-                        if(!this.allowedPrefixes.includes(prefix.toLowerCase())){
-                            let line = ctx.start.line;
-                            let column = ctx.start.column;
-                            let message = `${prefix} is not a valid prefix.`;
-                            console.log(`${line}:${column}: ${message}`);
-                        }
 
                         if (child.children[0].constructor.name === 'PrimitiveEntityContext') {
 
