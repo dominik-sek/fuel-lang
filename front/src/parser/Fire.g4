@@ -6,14 +6,16 @@ stmt:
     assignStmt
     | printStmt
     | relationStmt
+    | ifThenDoStmt
 ;
+
 //use REL to represent relational operators
 relationStmt: 'REL' variableName '=>' variableName 'as' variableName '=' value;
 assignStmt: (primitiveEntity | LET) variableName '=' (arr | value);
-printStmt: PRINT value;
+printStmt: PRINT (STRING | value);
+//check if higher lower etc
+ifThenDoStmt: 'IF' variableName (objectChildReference) operatorNumberPair 'DO' variableName objectChildReference; 
 
-
-  
 json
     : jsonObject* EOF
     ;
@@ -24,6 +26,9 @@ jsonObject
     ;
 
 
+objectChildReference
+    : '.' variableName
+    ;
 variableName
     : IDENTIFIER
     ;
@@ -32,7 +37,18 @@ keyValuePair
     : (IDENTIFIER | STRING) ':' (value | jsonObject)
     ;
 
-    
+valueOperators
+    : '<'
+    | '<='
+    | '>'
+    | '>='
+    | '=='
+    ;
+
+operatorNumberPair   
+      : valueOperators value
+      ;
+
 primitiveEntity
     : 'ENT' //entity
     | 'ACT' //activity
@@ -44,6 +60,7 @@ primitiveEntity
 LET : 'let';
 PRINT : 'print';
 INSIDE : 'inside';
+
 
 value
    : STRING
@@ -68,6 +85,7 @@ NUMBER
 STRING
    : '"' (ESC | SAFECODEPOINT)* '"'
    ;
+
 
 fragment EXP
    : [Ee] [+\-]? INT
@@ -100,5 +118,5 @@ IDENTIFIER
     ;
 
 WS
-    :   [ \t\r\n]+ -> skip
+    :   [ \t\r\n]+ -> channel(HIDDEN)
     ;

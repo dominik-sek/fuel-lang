@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
+// import "prismjs/themes/prism.css";
 import { ANTLRInputStream, CommonTokenStream } from 'antlr4ts';
 import { FireLexer } from './parser/FireLexer.ts'
 import { FireParser } from './parser/FireParser.ts'
@@ -15,10 +16,8 @@ import {FireErrorListener} from './parser/FireErrorListener.ts';
 
 let codeString = ``;
 let codeQueueString = `TODO:
-1) LINE NUMBERS
-2) SYNTAX HIGHLIGHTER
-3) IMPLEMENT LOGIC
-4) FIX RELATIONS
+1) SYNTAX HIGHLIGHTER
+2) IMPLEMENT LOGIC FOR RELATIONS, IF THEN DO
 `;
 
 
@@ -42,35 +41,49 @@ function App() {
   let visitor = new Visitor();
   visitor.visit(tree);
   let printables = visitor.getPrintables();
+  let ifThenDo = visitor.getIfThenDo();
+  let defineErrors = visitor.getDefineErrors();
+
   const pushQueue = () => {
     document.body.scrollTop = document.documentElement.scrollTop = 0;
     setCode(codeQueue);
   }
+  
+  const hightlightWithLineNumbers = (input, language) =>
+  highlight(input, language)
+    .split("\n")
+    .map((line, i) => `<span class='editorLineNumber'>${i + 1}</span>${line}`)
+    .join("\n");
 
   return (
     <Container>
   <Editor
     value={codeQueue}
     onValueChange={code => setCodeQueue(code)}
-    highlight={code => highlight(code, languages.js)}
+    highlight={code => hightlightWithLineNumbers(code, languages.js)}
     padding={10}
-    className="terminal-editor"
+    className="editor"
     />
 
     <CompileButton onClick={()=>pushQueue()}>
-      Compile
+      Interpret
     </CompileButton>
 
     <Terminal>
       {printables.map((printable, index) => {
-        return <TerminalLine key={index}>{printable}</TerminalLine>
+        return <TerminalLine type={printable.type} key={index}>{printable}</TerminalLine>
       })}
       {parserErrorListener.errorMessages.map((error, index) => {
-        return <TerminalLine type={'err'} key={index}>{error}</TerminalLine>
+        return <TerminalLine type={'err'} key={index}>PARSER ERROR: {error}</TerminalLine>
       })}
       {lexerErrorListener.errorMessages.map((error, index) => {
-        return <TerminalLine type={'err'} key={index}>{error}</TerminalLine>
+        return <TerminalLine type={'err'} key={index}>LEXER ERROR: {error}</TerminalLine>
       })}
+      {
+        defineErrors.map((error, index) => {
+          return <TerminalLine type={'err'} key={index}>{error}</TerminalLine>
+        })
+      }
     </Terminal>
 </Container>  
 );

@@ -1,6 +1,23 @@
-.terminal-editor{
+.editor{
   background-color: black;
   border-right: 1px solid white;
   color:white;
   min-height: 100vh;
+  counter-reset: line;
+}
+.editor textarea {
+  outline: none;
+  padding-left: 60px !important;
+}
+.editor pre {
+  padding-left: 60px !important;
+}
+
+.editor .editorLineNumber {
+  position: absolute;
+  left: 0px;
+  color: #ff00b3;
+  text-align: right;
+  width: 40px;
+  font-weight: 100;
 }

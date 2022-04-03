@@ -8,10 +8,14 @@ import { StmtContext } from "./FireParser";
 import { RelationStmtContext } from "./FireParser";
 import { AssignStmtContext } from "./FireParser";
 import { PrintStmtContext } from "./FireParser";
+import { IfThenDoStmtContext } from "./FireParser";
 import { JsonContext } from "./FireParser";
 import { JsonObjectContext } from "./FireParser";
+import { ObjectChildReferenceContext } from "./FireParser";
 import { VariableNameContext } from "./FireParser";
 import { KeyValuePairContext } from "./FireParser";
+import { ValueOperatorsContext } from "./FireParser";
+import { OperatorNumberPairContext } from "./FireParser";
 import { PrimitiveEntityContext } from "./FireParser";
 import { ValueContext } from "./FireParser";
 import { ArrContext } from "./FireParser";
@@ -79,6 +83,17 @@ export interface FireListener extends ParseTreeListener {
 	exitPrintStmt?: (ctx: PrintStmtContext) => void;
 
 	/**
+	 * Enter a parse tree produced by `FireParser.ifThenDoStmt`.
+	 * @param ctx the parse tree
+	 */
+	enterIfThenDoStmt?: (ctx: IfThenDoStmtContext) => void;
+	/**
+	 * Exit a parse tree produced by `FireParser.ifThenDoStmt`.
+	 * @param ctx the parse tree
+	 */
+	exitIfThenDoStmt?: (ctx: IfThenDoStmtContext) => void;
+
+	/**
 	 * Enter a parse tree produced by `FireParser.json`.
 	 * @param ctx the parse tree
 	 */
@@ -101,6 +116,17 @@ export interface FireListener extends ParseTreeListener {
 	exitJsonObject?: (ctx: JsonObjectContext) => void;
 
 	/**
+	 * Enter a parse tree produced by `FireParser.objectChildReference`.
+	 * @param ctx the parse tree
+	 */
+	enterObjectChildReference?: (ctx: ObjectChildReferenceContext) => void;
+	/**
+	 * Exit a parse tree produced by `FireParser.objectChildReference`.
+	 * @param ctx the parse tree
+	 */
+	exitObjectChildReference?: (ctx: ObjectChildReferenceContext) => void;
+
+	/**
 	 * Enter a parse tree produced by `FireParser.variableName`.
 	 * @param ctx the parse tree
 	 */
@@ -121,6 +147,28 @@ export interface FireListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitKeyValuePair?: (ctx: KeyValuePairContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `FireParser.valueOperators`.
+	 * @param ctx the parse tree
+	 */
+	enterValueOperators?: (ctx: ValueOperatorsContext) => void;
+	/**
+	 * Exit a parse tree produced by `FireParser.valueOperators`.
+	 * @param ctx the parse tree
+	 */
+	exitValueOperators?: (ctx: ValueOperatorsContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `FireParser.operatorNumberPair`.
+	 * @param ctx the parse tree
+	 */
+	enterOperatorNumberPair?: (ctx: OperatorNumberPairContext) => void;
+	/**
+	 * Exit a parse tree produced by `FireParser.operatorNumberPair`.
+	 * @param ctx the parse tree
+	 */
+	exitOperatorNumberPair?: (ctx: OperatorNumberPairContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `FireParser.primitiveEntity`.

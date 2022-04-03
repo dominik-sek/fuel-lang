@@ -1,8 +1,10 @@
+import { FireLexer } from './FireLexer';
 import { ErrorNode } from "antlr4ts/tree/ErrorNode";
 import { ParseTree } from "antlr4ts/tree/ParseTree";
 import { TerminalNode } from "antlr4ts/tree/TerminalNode";
+import { FireParser, ObjectChildReferenceContext } from "./FireParser";
 import {ANTLRErrorListener} from "antlr4ts";
-import { CompilationUnitContext, StmtContext, RelationStmtContext, AssignStmtContext, PrintStmtContext, JsonContext, JsonObjectContext, VariableNameContext, KeyValuePairContext, PrimitiveEntityContext, ValueContext, ArrContext, BoolContext } from "./FireParser";
+import { CompilationUnitContext, StmtContext, RelationStmtContext, AssignStmtContext, PrintStmtContext, JsonContext, JsonObjectContext, VariableNameContext, KeyValuePairContext, PrimitiveEntityContext, ValueContext, ArrContext, BoolContext, IfThenDoStmtContext } from "./FireParser";
 import { FireVisitor } from "./FireVisitor";
 
 export default class Visitor implements FireVisitor<any> {
@@ -19,6 +21,7 @@ export default class Visitor implements FireVisitor<any> {
     visitValue?: (ctx: ValueContext) => any;
     visitArr?: (ctx: ArrContext) => any;
     visitBool?: (ctx: BoolContext) => any;
+    visitObjectChildReference?: (ctx: ObjectChildReferenceContext) => any;
     visit(tree: ParseTree) {
         return tree.accept(this);
     }
@@ -31,9 +34,61 @@ export default class Visitor implements FireVisitor<any> {
     objects = {};
     relations = {};
     arrays = {};
-
+    ifThenDo = {};
     printables = [];
+    defineErrors = [];
 
+    private checkIfSubjectIsDefined(subjectName: ParseTree) {
+        if(this.objects[subjectName?.text] || this.arrays[subjectName?.text]){
+            return true;
+        }
+        return false;
+    }
+    private getLineNumber(ctx?: ParseTree) {
+        return ctx?.start?.line;
+    }
+
+    visitIfThenDoStmt(ctx: IfThenDoStmtContext) {
+        let ifIndex = ctx.children.findIndex(child => child.text === 'IF');
+        let doIndex = ctx.children.findIndex(child => child.text === 'DO');
+
+        let ifSubject = ctx.children[ifIndex + 1];
+        let ifFieldReference = ctx.children[ifIndex + 2].text.substring(1);
+        //==========================================================
+        let operatorNumberPair = ctx.children[3].text;
+        let operator = operatorNumberPair[0];
+        let number = operatorNumberPair.substring(1);
+
+        //==========================================================
+        let doSubject = ctx.children[doIndex + 1];
+        let doFieldReference = ctx.children[doIndex + 2].text.substring(1);
+        console.log(ifSubject.text, ifFieldReference, doSubject.text, doFieldReference);
+
+        let subjects = [ifSubject, doSubject];
+        
+        
+        subjects?.forEach(subject => {
+        if(subject){
+            let line = this?.getLineNumber(subject);
+                if(!this.checkIfSubjectIsDefined(subject)){
+                    this.defineErrors.push(`"at line ${line} ${subject.text}" is not defined`);
+                    return;
+                }
+        }
+    });
+        let ifSubjectObject = this.objects[ifSubject?.text].values;
+        let doSubjectObject = this.objects[doSubject?.text].values;
+        console.log(doSubjectObject)
+        if(eval(ifSubjectObject[ifFieldReference] + operator + number)){
+            console.log(doSubjectObject[doFieldReference]);
+        }
+        //
+        // if(){
+
+        // }
+    }
+    
+    
 
     visitChildren(ctx) {
         if (!ctx) {
@@ -62,11 +117,11 @@ export default class Visitor implements FireVisitor<any> {
 
                         if (child.children[3].constructor.name === 'ArrContext') {
                             let arrValues = child.children[3].text.slice(1, -1).split(',');
-
                             let arr = {
                                 name: objName,
                                 type: "array",
                                 values: arrValues.map(value => {
+
                                     if (this.objects[value]) {
                                         return this.objects[value].values;
                                     }
@@ -75,6 +130,9 @@ export default class Visitor implements FireVisitor<any> {
                                     }
                                     if (this.relations[value]) {
                                         return this.relations[value].values;
+                                    }
+                                    if(value.includes('"')){
+                                        return value.slice(1, -1);
                                     }
                                     return value;
                                 })
@@ -103,7 +161,6 @@ export default class Visitor implements FireVisitor<any> {
                     }
                     if (child.constructor.name === 'PrintStmtContext') {
                         let printValue = child.children[1].text;
-
                         if (this.objects[printValue]) {
                             this.setPrintables(this.objects[printValue]);
                         }
@@ -112,6 +169,12 @@ export default class Visitor implements FireVisitor<any> {
                         }
                         if (this.arrays[printValue]) {
                             this.setPrintables(this.arrays[printValue]);
+                        }
+                        if(printValue[0] === '"'){
+                            this.setPrintables({
+                                type: "string",
+                                value: printValue.slice(1, -1)
+                            });
                         }
 
                     }
@@ -133,10 +196,17 @@ export default class Visitor implements FireVisitor<any> {
     getArrays() {
         return this.arrays;
     }
+    getIfThenDo(){
+        return this.ifThenDo;
+    }
     getPrintables(){
         return this.printables;
+    }
+    getDefineErrors(){
+        return this.defineErrors;
     }
     setPrintables(printable){
         this.printables.push(printable);
     }
+    
 }

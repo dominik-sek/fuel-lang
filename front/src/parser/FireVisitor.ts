@@ -8,10 +8,14 @@ import { StmtContext } from "./FireParser";
 import { RelationStmtContext } from "./FireParser";
 import { AssignStmtContext } from "./FireParser";
 import { PrintStmtContext } from "./FireParser";
+import { IfThenDoStmtContext } from "./FireParser";
 import { JsonContext } from "./FireParser";
 import { JsonObjectContext } from "./FireParser";
+import { ObjectChildReferenceContext } from "./FireParser";
 import { VariableNameContext } from "./FireParser";
 import { KeyValuePairContext } from "./FireParser";
+import { ValueOperatorsContext } from "./FireParser";
+import { OperatorNumberPairContext } from "./FireParser";
 import { PrimitiveEntityContext } from "./FireParser";
 import { ValueContext } from "./FireParser";
 import { ArrContext } from "./FireParser";
@@ -62,6 +66,13 @@ export interface FireVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitPrintStmt?: (ctx: PrintStmtContext) => Result;
 
 	/**
+	 * Visit a parse tree produced by `FireParser.ifThenDoStmt`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitIfThenDoStmt?: (ctx: IfThenDoStmtContext) => Result;
+
+	/**
 	 * Visit a parse tree produced by `FireParser.json`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -76,6 +87,13 @@ export interface FireVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitJsonObject?: (ctx: JsonObjectContext) => Result;
 
 	/**
+	 * Visit a parse tree produced by `FireParser.objectChildReference`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitObjectChildReference?: (ctx: ObjectChildReferenceContext) => Result;
+
+	/**
 	 * Visit a parse tree produced by `FireParser.variableName`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -88,6 +106,20 @@ export interface FireVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitKeyValuePair?: (ctx: KeyValuePairContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `FireParser.valueOperators`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitValueOperators?: (ctx: ValueOperatorsContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `FireParser.operatorNumberPair`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitOperatorNumberPair?: (ctx: OperatorNumberPairContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `FireParser.primitiveEntity`.
