@@ -4,6 +4,8 @@
   color:white;
   min-height: 100vh;
   counter-reset: line;
+  font-size: 1.2em;
+  font-family: monospace;
 }
 .editor textarea {
   outline: none;

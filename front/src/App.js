@@ -6,7 +6,7 @@ import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 // import "prismjs/themes/prism.css";
-import { ANTLRInputStream, CommonTokenStream } from 'antlr4ts';
+import { ANTLRInputStream, CommonTokenStream, Lexer } from 'antlr4ts';
 import { FireLexer } from './parser/FireLexer.ts'
 import { FireParser } from './parser/FireParser.ts'
 import  Visitor  from './parser/Visitor.ts';
@@ -41,8 +41,9 @@ function App() {
   let visitor = new Visitor();
   visitor.visit(tree);
   let printables = visitor.getPrintables();
-  let ifThenDo = visitor.getIfThenDo();
   let defineErrors = visitor.getDefineErrors();
+  let alertInvocations = visitor.getAlertInvocations();
+
 
   const pushQueue = () => {
     document.body.scrollTop = document.documentElement.scrollTop = 0;
@@ -73,17 +74,24 @@ function App() {
       {printables.map((printable, index) => {
         return <TerminalLine type={printable.type} key={index}>{printable}</TerminalLine>
       })}
+
       {parserErrorListener.errorMessages.map((error, index) => {
         return <TerminalLine type={'err'} key={index}>PARSER ERROR: {error}</TerminalLine>
       })}
+
       {lexerErrorListener.errorMessages.map((error, index) => {
         return <TerminalLine type={'err'} key={index}>LEXER ERROR: {error}</TerminalLine>
       })}
-      {
-        defineErrors.map((error, index) => {
+
+      {defineErrors.map((error, index) => {
           return <TerminalLine type={'err'} key={index}>{error}</TerminalLine>
         })
       }
+      {alertInvocations.map((alertInvocation, index) => {
+          return <TerminalLine type={'alert'} key={index}>{alertInvocation}</TerminalLine>
+        })
+      }
+      
     </Terminal>
 </Container>  
 );

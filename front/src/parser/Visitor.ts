@@ -34,9 +34,9 @@ export default class Visitor implements FireVisitor<any> {
     objects = {};
     relations = {};
     arrays = {};
-    ifThenDo = {};
     printables = [];
     defineErrors = [];
+    alertInvocations = [];
 
     private checkIfSubjectIsDefined(subjectName: ParseTree) {
         if(this.objects[subjectName?.text] || this.arrays[subjectName?.text]){
@@ -62,7 +62,6 @@ export default class Visitor implements FireVisitor<any> {
         //==========================================================
         let doSubject = ctx.children[doIndex + 1];
         let doFieldReference = ctx.children[doIndex + 2].text.substring(1);
-        console.log(ifSubject.text, ifFieldReference, doSubject.text, doFieldReference);
 
         let subjects = [ifSubject, doSubject];
         
@@ -76,16 +75,27 @@ export default class Visitor implements FireVisitor<any> {
                 }
         }
     });
-        let ifSubjectObject = this.objects[ifSubject?.text].values;
-        let doSubjectObject = this.objects[doSubject?.text].values;
-        console.log(doSubjectObject)
-        if(eval(ifSubjectObject[ifFieldReference] + operator + number)){
-            console.log(doSubjectObject[doFieldReference]);
-        }
-        //
-        // if(){
+        let ifSubjectObject = this.objects[ifSubject?.text];
+        let doSubjectObject = this.objects[doSubject?.text];
 
-        // }
+        if(eval(ifSubjectObject.values[ifFieldReference] + operator + number)){
+             let desc : string;
+            for(const relation of Object.entries(this.relations)){
+                if(ifSubjectObject.values.entity === relation[1].entity1){
+                    desc = relation[1].values.name
+                }
+            }
+            let invocation = {
+                invoker: ifSubjectObject.values.entity,
+                activity: ifSubjectObject.name,
+                event: doSubjectObject.values.name,
+                eventGoal:doSubjectObject.values.goal,
+                eventLocation:doSubjectObject.values.location,
+                invokerDesc: desc,
+            }
+            this.alertInvocations.push(invocation);
+        }
+
     }
     
     
@@ -196,8 +206,8 @@ export default class Visitor implements FireVisitor<any> {
     getArrays() {
         return this.arrays;
     }
-    getIfThenDo(){
-        return this.ifThenDo;
+    getAlertInvocations() {
+        return this.alertInvocations;
     }
     getPrintables(){
         return this.printables;
