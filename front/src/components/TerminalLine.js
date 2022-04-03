@@ -5,13 +5,14 @@ import React, { useState, useEffect } from 'react';
 const TerminalLine = (props) => {
     const [type, setType] = useState(props.type);
     let output = ``;
+    console.log(type)
     console.log(props.children)
     const filterByType = (type) => {
         switch(type){
             case "err":
                 return <pre>{props.children}</pre>
             case "string":
-                return <pre>{props.children.value}</pre>
+                return <span>{props.children.value}</span>
             case "alert":
                 for(const property in props.children){
                     output += `${property}: ${props.children[property]}`

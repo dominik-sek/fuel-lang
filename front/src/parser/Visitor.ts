@@ -10,9 +10,9 @@ import { FireVisitor } from "./FireVisitor";
 export default class Visitor implements FireVisitor<any> {
     visitCompilationUnit?: (ctx: CompilationUnitContext) => any;
     visitStmt?: (ctx: StmtContext) => any;
-    visitRelationStmt?: (ctx: RelationStmtContext) => any;
-    visitAssignStmt?: (ctx: AssignStmtContext) => any;
-    visitPrintStmt?: (ctx: PrintStmtContext) => any;
+    // visitRelationStmt?: (ctx: RelationStmtContext) => any;
+    // visitAssignStmt?: (ctx: AssignStmtContext) => any;
+    // visitPrintStmt?: (ctx: PrintStmtContext) => any;
     visitJson?: (ctx: JsonContext) => any;
     visitJsonObject?: (ctx: JsonObjectContext) => any;
     visitVariableName?: (ctx: VariableNameContext) => any;
@@ -34,12 +34,13 @@ export default class Visitor implements FireVisitor<any> {
     objects = {};
     relations = {};
     arrays = {};
+
     printables = [];
     defineErrors = [];
     alertInvocations = [];
 
-    private checkIfSubjectIsDefined(subjectName: ParseTree) {
-        if(this.objects[subjectName?.text] || this.arrays[subjectName?.text]){
+    private checkIfValueIsDefined(subjectName: ParseTree) {
+        if(this.objects[subjectName?.text] || this.arrays[subjectName?.text] || this.relations[subjectName?.text]){
             return true;
         }
         return false;
@@ -69,7 +70,7 @@ export default class Visitor implements FireVisitor<any> {
         subjects?.forEach(subject => {
         if(subject){
             let line = this?.getLineNumber(subject);
-                if(!this.checkIfSubjectIsDefined(subject)){
+                if(!this.checkIfValueIsDefined(subject)){
                     this.defineErrors.push(`at line ${line} "${subject.text}" is not defined`);
                     return;
                 }
@@ -98,98 +99,111 @@ export default class Visitor implements FireVisitor<any> {
         }
 
     }
-    
-    
+    visitRelationStmt(ctx: RelationStmtContext) {
+        let prefix = ctx.children[0];
+        let relationENT1 = ctx.children[1];
+        let relationType = ctx.children[2];
+        let relationENT2 = ctx.children[3];
+        let relationName = ctx.children[5];
+        let relationValue = ctx.children[7];
+
+        let variables = [relationENT1, relationENT2];
+        variables.forEach(variable => {
+            if(variable){
+                let line = this?.getLineNumber(variable);
+                if(!this.checkIfValueIsDefined(variable)){
+                    this.defineErrors.push(`at line ${line} "${variable.text}" is not defined`);
+                    return;
+                }
+            }
+        });
+
+        let relation = {
+            name: relationName.text,
+            type: prefix.text,
+            entity1: relationENT1.text,
+            entity2: relationENT2.text,
+            values: JSON.parse(relationValue.text)
+        }
+        this.relations[relationName.text] = relation;
+    }
+    visitPrintStmt(ctx: PrintStmtContext) {
+        let printValue = ctx.children[1];
+        
+        if(!this.checkIfValueIsDefined(printValue)){
+            if(printValue.text === '"'){
+                this.setPrintables({
+                    type: "string",
+                    value: printValue.text.slice(1, -1)
+                });
+            }else{
+            this.defineErrors.push(`at line ${this?.getLineNumber(printValue)} "${printValue.text}" is not defined`);
+            return;
+            }
+        return
+        }
+
+        if (this.objects[printValue.text]) {
+            this.setPrintables(this.objects[printValue.text]);
+        }
+        if (this.relations[printValue.text]) {
+            this.setPrintables(this.relations[printValue.text]);
+        }
+        if (this.arrays[printValue.text]) {
+            this.setPrintables(this.arrays[printValue.text]);
+        }
+        
+    }
+    visitAssignStmt(ctx: AssignStmtContext) {
+        let prefix = ctx.children[0];
+        let objName = ctx.children[1];
+        let objValues = ctx.children[3];
+
+        if (prefix.constructor.name === 'PrimitiveEntityContext') {
+
+            let obj = {
+                name: objName.text,
+                type: prefix.text,
+                values: JSON.parse(objValues.text)
+            }
+            this.objects[objName.text] = obj;
+        }
+
+        if (objValues.constructor.name === 'ArrContext') {
+            let arrValues = objValues.text.slice(1, -1).split(',');
+            let arr = {
+                name: objName.text,
+                type: "array",
+                values: arrValues.map(value => {
+
+                    if (this.objects[value]) {
+                        return this.objects[value].values;
+                    }
+                    if (this.arrays[value]) {
+                        return this.arrays[value].values;
+                    }
+                    if (this.relations[value]) {
+                        return this.relations[value].values;
+                    }
+                    if(value.includes('"')){
+                        return value.slice(1, -1);
+                    }
+                    return value;
+                })
+            }
+            this.arrays[objName.text] = arr;
+        }
+
+    }
+
 
     visitChildren(ctx) {
         if (!ctx) {
             return;
         }
         if (ctx.children) {
-            
-            
             return ctx.children.map(child => {
                 if (child.children && child.children.length !== 0) {
-
-                    if (child.constructor.name === 'AssignStmtContext') {
-                        let prefix = child.children[0].text;
-                        let objName = child.children[1].text;
-                        let objValues = child.children[3].text;
-
-                        if (child.children[0].constructor.name === 'PrimitiveEntityContext') {
-
-                            let obj = {
-                                name: objName,
-                                type: prefix,
-                                values: JSON.parse(objValues)
-                            }
-                            this.objects[objName] = obj;
-                        }
-
-                        if (child.children[3].constructor.name === 'ArrContext') {
-                            let arrValues = child.children[3].text.slice(1, -1).split(',');
-                            let arr = {
-                                name: objName,
-                                type: "array",
-                                values: arrValues.map(value => {
-
-                                    if (this.objects[value]) {
-                                        return this.objects[value].values;
-                                    }
-                                    if (this.arrays[value]) {
-                                        return this.arrays[value].values;
-                                    }
-                                    if (this.relations[value]) {
-                                        return this.relations[value].values;
-                                    }
-                                    if(value.includes('"')){
-                                        return value.slice(1, -1);
-                                    }
-                                    return value;
-                                })
-                            }
-                            this.arrays[objName] = arr;
-                        }
-
-                    }
-                    if (child.constructor.name === 'RelationStmtContext') {
-                        let prefix = child.children[0].text;
-                        let relationENT1 = child.children[1].text;
-                        let relationType = child.children[2].text;
-                        let relationENT2 = child.children[3].text;
-                        let relationName = child.children[5].text;
-                        let relationValue = child.children[7].text;
-
-                        let relation = {
-                            name: relationName,
-                            type: prefix,
-                            entity1: relationENT1,
-                            entity2: relationENT2,
-                            values: JSON.parse(relationValue)
-                        }
-
-                        this.relations[relationName] = relation;
-                    }
-                    if (child.constructor.name === 'PrintStmtContext') {
-                        let printValue = child.children[1].text;
-                        if (this.objects[printValue]) {
-                            this.setPrintables(this.objects[printValue]);
-                        }
-                        if (this.relations[printValue]) {
-                            this.setPrintables(this.relations[printValue]);
-                        }
-                        if (this.arrays[printValue]) {
-                            this.setPrintables(this.arrays[printValue]);
-                        }
-                        if(printValue[0] === '"'){
-                            this.setPrintables({
-                                type: "string",
-                                value: printValue.slice(1, -1)
-                            });
-                        }
-
-                    }
-
                     return child.accept(this);
                 } else {
                     return child.text;
@@ -198,6 +212,7 @@ export default class Visitor implements FireVisitor<any> {
         }
 
     }
+    
     getObjects() {
         return this.objects;
     }

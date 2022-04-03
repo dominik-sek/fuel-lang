@@ -67,7 +67,7 @@
 
     EVT ALERT_0002 = {
         "name":"alert nr2 sredni stopien zagrozenia",
-        "goal":"powiadom ochrone",
+        "gal":"powiadom ochrone",
         "location": "ul. Warszawska 15A, 42-200 Częstochowa, I piętro, pierwszy kontener od okna",
         "subject": "CZUJNIK_0002",
         "state": "active"
@@ -79,5 +79,8 @@
     let events = [ALERT_0001, ALERT_0002]
 
     
-    print KONTENER_0001
-    print entities
+    IF POMIAR_TEMPERATURY_0001.result > 30
+    DO ALERT_0001.goal
+    
+    IF POMIAR_TEMPERATURY_0002.result >= 25
+    DO ALERT_0002.goal

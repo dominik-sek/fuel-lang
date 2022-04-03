@@ -99,7 +99,7 @@ function App() {
 
 const Container = styled.div`
   display:flex;
-  width:100%;
+  
   position:relative;
   & > div{
     width:50%;
