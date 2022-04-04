@@ -22,7 +22,6 @@ const TerminalLine = (props) => {
                 return <pre>{props.children.name} {JSON.stringify(props.children.values, null, '\t')}</pre>
         }
     }
-    console.log(output)
     return (
         <Container type={type}>
             {
@@ -34,7 +33,6 @@ const TerminalLine = (props) => {
 
 const Container = styled.div`
     background:black;
-    padding-left:6ch;
     color:${props => {
         switch(props.type){
             case "err":
@@ -51,6 +49,11 @@ const Container = styled.div`
     font-size:1.2em;
     
     &::before {
+        background-color: rgb(44, 46, 47);
+        height:100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         content:'${props => {
         switch(props.type){
             case "err":
@@ -76,15 +79,12 @@ const Container = styled.div`
                 return "white"
         }
     }};
-        position:absolute;
-        left:0;
-        top:0;
+
         font-family: monospace;
         font-size:1.2em;
-        height:100%;
         display: flex;
         align-items: center;
-        background-color: rgb(44, 46, 47);
+
     }
 
     & > pre{

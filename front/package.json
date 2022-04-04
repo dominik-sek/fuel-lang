@@ -25,6 +25,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "predeploy":"npm run build",
+    "deploy": "gh-pages -d build",
     "antlr4ts": "antlr4ts -o ./src/parser -visitor ./src/parser/Fire.g4"
   },
   "browser": {

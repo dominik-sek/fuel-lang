@@ -19,7 +19,8 @@ public class FireParser extends Parser {
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
-		LET=25, PRINT=26, INSIDE=27, NUMBER=28, STRING=29, IDENTIFIER=30, WS=31;
+		LET=25, PRINT=26, INSIDE=27, NUMBER=28, STRING=29, IDENTIFIER=30, WS=31, 
+		COMMENT=32, LINE_COMMENT=33;
 	public static final int
 		RULE_compilationUnit = 0, RULE_stmt = 1, RULE_relationStmt = 2, RULE_assignStmt = 3, 
 		RULE_printStmt = 4, RULE_ifThenDoStmt = 5, RULE_json = 6, RULE_jsonObject = 7, 
@@ -49,7 +50,8 @@ public class FireParser extends Parser {
 		return new String[] {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, "LET", "PRINT", "INSIDE", "NUMBER", "STRING", "IDENTIFIER", "WS"
+			null, "LET", "PRINT", "INSIDE", "NUMBER", "STRING", "IDENTIFIER", "WS", 
+			"COMMENT", "LINE_COMMENT"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -1024,7 +1026,7 @@ public class FireParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3!\u0098\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3#\u0098\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\3\2\7\2&\n\2\f\2\16\2)\13\2\3\2\3\2\3\3\3\3\3\3\3\3\5\3\61\n\3\3\4\3"+

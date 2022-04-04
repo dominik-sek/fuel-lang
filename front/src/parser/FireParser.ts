@@ -59,6 +59,8 @@ export class FireParser extends Parser {
 	public static readonly STRING = 29;
 	public static readonly IDENTIFIER = 30;
 	public static readonly WS = 31;
+	public static readonly COMMENT = 32;
+	public static readonly LINE_COMMENT = 33;
 	public static readonly RULE_compilationUnit = 0;
 	public static readonly RULE_stmt = 1;
 	public static readonly RULE_relationStmt = 2;
@@ -95,7 +97,7 @@ export class FireParser extends Parser {
 		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
 		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
 		undefined, undefined, undefined, undefined, "LET", "PRINT", "INSIDE", 
-		"NUMBER", "STRING", "IDENTIFIER", "WS",
+		"NUMBER", "STRING", "IDENTIFIER", "WS", "COMMENT", "LINE_COMMENT",
 	];
 	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(FireParser._LITERAL_NAMES, FireParser._SYMBOLIC_NAMES, []);
 
@@ -901,7 +903,7 @@ export class FireParser extends Parser {
 	}
 
 	public static readonly _serializedATN: string =
-		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03!\x98\x04\x02" +
+		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03#\x98\x04\x02" +
 		"\t\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06\x04\x07" +
 		"\t\x07\x04\b\t\b\x04\t\t\t\x04\n\t\n\x04\v\t\v\x04\f\t\f\x04\r\t\r\x04" +
 		"\x0E\t\x0E\x04\x0F\t\x0F\x04\x10\t\x10\x04\x11\t\x11\x04\x12\t\x12\x03" +

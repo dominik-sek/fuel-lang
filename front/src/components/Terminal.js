@@ -18,8 +18,6 @@ const TerminalContainer = styled.div`
     display: flex;
     justify-content: flex-end;
     flex-direction: column-reverse;
-    border-top: 5px solid white;
-
 `
 const TerminalWrapper = styled.div`
     height:30%;

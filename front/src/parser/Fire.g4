@@ -120,3 +120,10 @@ IDENTIFIER
 WS
     :   [ \t\r\n]+ -> channel(HIDDEN)
     ;
+COMMENT
+    : '/*' .*? '*/' -> skip
+;
+
+LINE_COMMENT
+    : '//' ~[\r\n]* -> skip
+;

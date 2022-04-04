@@ -108,7 +108,7 @@ function App() {
     </EditorWrapper>
 
 
-
+      <p className='terminal-line' />
 
     <Terminal id="terminal" >
       {printables.map((printable, index) => {
@@ -144,6 +144,11 @@ const Container = styled.div`
   height:100vh;
   & > div{
     width:100%;
+  }
+  && .terminal-line{
+    width: 100%;
+    background-color: white;
+    margin:1px 1px;
   }
 `
 const RunButton = styled.button`
