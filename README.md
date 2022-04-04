@@ -76,7 +76,7 @@ defines a Relation
 * relation
 	* ` REL` **definedVariable** `=>` **definedVariable** `as` **newVariableName**
 * ifThenDo
-	* `IF `**ACT**`.`**fieldRef**`DO` **EVT**`.`**fieldRef**
+	* `IF `**ACT**`.`**fieldRef** `operator` **numberType** `DO` **EVT**`.`**fieldRef**
 ```
 IF POMIAR_TEMPERATURY_0001.result > 30
 DO ALERT_0001.goal 
