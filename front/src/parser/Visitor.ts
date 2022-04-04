@@ -128,29 +128,37 @@ export default class Visitor implements FireVisitor<any> {
     }
     visitPrintStmt(ctx: PrintStmtContext) {
         let printValue = ctx?.children[1];
+        console.log("printing: ", printValue?.text);
         
         if(!this.checkIfValueIsDefined(printValue)){
-            if(printValue){
-            if(printValue.text === '"'){
+            console.log("print value is not defined");
+        if(printValue){
+                console.log(`checking if val is string: ${printValue.text}`);
+            if(printValue.text[0] === '"'){
+                console.log("print value is string");
                 this.setPrintables({
                     type: "string",
                     value: printValue.text.slice(1, -1)
                 });
             }else{
-            this.defineErrors.push(`at line ${this?.getLineNumber(printValue)} "${printValue.text}" is not defined`);
+                this.defineErrors.push(`at line ${this?.getLineNumber(printValue)} "${printValue.text}" is not defined`);
             return;
             }
+
         }
         return
         }
 
         if (this.objects[printValue.text]) {
+            console.log("printing object: ", this.objects[printValue.text]);
             this.setPrintables(this.objects[printValue.text]);
         }
         if (this.relations[printValue.text]) {
+            console.log("printing relation: ", this.relations[printValue.text]);
             this.setPrintables(this.relations[printValue.text]);
         }
         if (this.arrays[printValue.text]) {
+            console.log("printing array: ", this.arrays[printValue.text]);
             this.setPrintables(this.arrays[printValue.text]);
         }
         
@@ -174,23 +182,29 @@ export default class Visitor implements FireVisitor<any> {
 
         if (objValues.constructor.name === 'ArrContext') {
             let arrValues = objValues.text.slice(1, -1).split(',');
+            console.log("inside arrcontext", arrValues);
             let arr = {
                 name: objName.text,
                 type: "array",
                 values: arrValues.map(value => {
-
+                    console.log("trying to map: ", value);
                     if (this.objects[value]) {
+                        console.log("found object: ", this.objects[value]);
                         return this.objects[value].values;
                     }
                     if (this.arrays[value]) {
+                        console.log("found array: ", this.arrays[value]);
                         return this.arrays[value].values;
                     }
                     if (this.relations[value]) {
+                        console.log("found relation: ", this.relations[value]);
                         return this.relations[value].values;
                     }
                     if(value.includes('"')){
+                        console.log("found string: ", value);
                         return value.slice(1, -1);
                     }
+                    console.log("found primitive: ", value);
                     return value;
                 })
             }

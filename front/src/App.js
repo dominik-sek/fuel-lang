@@ -24,6 +24,7 @@ function App() {
   const [code, setCode] = useState(codeString);
   const [codeQueue, setCodeQueue] = useState(codeQueueString);
   
+  let version = '0.0.1';
   let chars = new ANTLRInputStream(code);
   let lexer = new FireLexer(chars);
   let tokens  = new CommonTokenStream(lexer);
@@ -71,6 +72,7 @@ function App() {
   return (
     <Container>
       <ButtonWrapper>
+      <p style={{color:'white'}}>ver: {version}</p>
       <RunButton onClick={()=>pushQueue()}>
       Run
       </RunButton>
