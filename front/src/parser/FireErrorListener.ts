@@ -11,9 +11,9 @@ export class FireErrorListener implements ANTLRErrorListener<any>  {
     msg: string,
     e: any
   ) {
-    console.log(
-      `${line}:${charPositionInLine} ${msg} ${offendingSymbol}`
-    );
+    // console.log(
+    //   `${line}:${charPositionInLine} ${msg} ${offendingSymbol}`
+    // );
     this.errorMessages.push (`${line}:${charPositionInLine} ${msg}`);
   }
   reportAmbiguity<T>(

@@ -1,11 +1,12 @@
 import { ErrorNode } from "antlr4ts/tree/ErrorNode";
 import { ParseTree } from "antlr4ts/tree/ParseTree";
 import { TerminalNode } from "antlr4ts/tree/TerminalNode";
+import { FireLexer } from "./FireLexer.ts";
 import { ObjectChildReferenceContext } from "./FireParser";
 import { CompilationUnitContext, StmtContext, RelationStmtContext, AssignStmtContext, PrintStmtContext, JsonContext, JsonObjectContext, VariableNameContext, KeyValuePairContext, PrimitiveEntityContext, ValueContext, ArrContext, BoolContext, IfThenDoStmtContext } from "./FireParser";
 import { FireVisitor } from "./FireVisitor";
 
-export default class Visitor implements FireVisitor<any> {
+export default class Visitor implements FireVisitor<any>  {
     visitCompilationUnit?: (ctx: CompilationUnitContext) => any;
     visitStmt?: (ctx: StmtContext) => any;
     // visitRelationStmt?: (ctx: RelationStmtContext) => any;
@@ -15,7 +16,7 @@ export default class Visitor implements FireVisitor<any> {
     visitJsonObject?: (ctx: JsonObjectContext) => any;
     visitVariableName?: (ctx: VariableNameContext) => any;
     visitKeyValuePair?: (ctx: KeyValuePairContext) => any;
-    // visitPrimitiveEntity?: (ctx: PrimitiveEntityContext) => any;
+    visitPrimitiveEntity?: (ctx: PrimitiveEntityContext) => any;
     visitValue?: (ctx: ValueContext) => any;
     visitArr?: (ctx: ArrContext) => any;
     visitBool?: (ctx: BoolContext) => any;
@@ -32,13 +33,18 @@ export default class Visitor implements FireVisitor<any> {
     objects = {};
     relations = {};
     arrays = {};
-
+    strings = {};
+    numbers = {};
     printables = [];
     defineErrors = [];
     alertInvocations = [];
 
     private checkIfValueIsDefined(subjectName: ParseTree) {
-        if (this.objects[subjectName?.text] || this.arrays[subjectName?.text] || this.relations[subjectName?.text]) {
+        if (this.objects[subjectName?.text] || 
+            this.arrays[subjectName?.text] || 
+            this.relations[subjectName?.text] || 
+            this.strings[subjectName?.text] ||
+            this.numbers[subjectName?.text] ) {
             return true;
         }
         return false;
@@ -46,19 +52,44 @@ export default class Visitor implements FireVisitor<any> {
     private getLineNumber(ctx?: ParseTree) {
         return ctx?.start?.line;
     }
+	// public static readonly LET = 25;
+	// public static readonly PRINT = 26;
+	// public static readonly INSIDE = 27;
+	// public static readonly NUMBER = 28;
+	// public static readonly STRING = 29;
+	// public static readonly IDENTIFIER = 30;
+	// public static readonly WS = 31;
+	// public static readonly COMMENT = 32;
+	// public static readonly LINE_COMMENT = 33;
 
     visitAssignStmt(ctx: AssignStmtContext) {
         let prefix = ctx?.children[0];
         let objName = ctx?.children[1];
         let objValues = ctx?.children[3];
-        console.log("trying to assign with", prefix, objValues.constructor.name);
+        
+        if(objValues.children[0].symbol){
+        switch (objValues.children[0].symbol.type){
+            case FireLexer.STRING:
+                let string = {
+                    name: objName.text,
+                    type: "string",
+                    value: objValues.children[0].text,
+                }
+                this.strings[objName.text] = string;
+                break;
+            case FireLexer.NUMBER:
+                let number = {
+                    name: objName.text,
+                    type: "number",
+                    value: objValues.children[0].text,
+                }
+                this.numbers[objName.text] = number;
+        }
 
-        if (!prefix || !objName || !objValues) {
-            console.log("error: ", prefix, objName, objValues);
-            return;
         }
 
         if (prefix.constructor.name === 'PrimitiveEntityContext') {
+
             let obj = {
                 name: objName.text,
                 type: prefix.text,
@@ -68,35 +99,27 @@ export default class Visitor implements FireVisitor<any> {
         }
 
         if (objValues.constructor.name === 'ArrContext') {
-            console.log("found array");
             let arrValues = objValues.text.slice(1, -1).split(',');
-            console.log(`${objName.text} = ${arrValues}`);
 
             let arr = {
                 name: objName.text,
                 type: "array",
                 values: arrValues.map(value => {
-                    console.log("trying to map: ", value);
                     if (this.objects[value]) {
-                        console.log("found object: ", this.objects[value]);
                         return this.objects[value].values;
                     }
                     if (this.arrays[value]) {
-                        console.log("found array: ", this.arrays[value]);
                         return this.arrays[value].values;
                     }
                     if (this.relations[value]) {
-                        console.log("found relation: ", this.relations[value]);
                         return this.relations[value].values;
                     }
                     if (value.includes('"')) {
-                        console.log("found string: ", value);
                         return value.slice(1, -1);
                     }
                     if (value.includes("")) {
                         return value;
                     }
-                    console.log("found primitive: ", value);
                     return value;
                 })
             }
@@ -110,27 +133,54 @@ export default class Visitor implements FireVisitor<any> {
 
         let ifSubject = ctx.children[ifIndex + 1];
         let ifFieldReference = ctx.children[ifIndex + 2].text.substring(1);
+        let ifValues = this.objects[ifSubject.text].values;
+        let ifType = this.objects[ifSubject.text].type;
+
         //==========================================================
         let operatorNumberPair = ctx.children[3];
         let operator = operatorNumberPair.children[0].text;
         let number = operatorNumberPair.children[1].text;
-
+        
         //==========================================================
         let doSubject = ctx.children[doIndex + 1];
-        // let doFieldReference = ctx.children[doIndex + 2].text.substring(1);
+        let doFieldReference = ctx.children[doIndex + 2].text.substring(1);
+        let doValues = this.objects[doSubject.text].values;
+        let doType = this.objects[doSubject.text].type;
+
+        if(ifType !== 'ACT'){
+            this.defineErrors.push('IF statement must be used with an ACT')
+            return;
+        }
+        if(doType !== 'EVT'){
+            this.defineErrors.push('DO statement must be used with an EVT')
+            return;
+        }
 
         let subjects = [ifSubject, doSubject];
+
+        if( (ifValues[ifFieldReference] === undefined || ifValues[ifFieldReference] === null)  ){
+            this.defineErrors.push(`type '${ifType}' ${ifSubject.text} requires a '${ifFieldReference}' field`)
+            return;
+        }
+        if((ifValues['entity'] === undefined || ifValues['entity'] === null)){
+            this.defineErrors.push(`type '${ifType}' ${ifSubject.text} requires an 'entity' field`)
+            return;
+        }
+        
+        if(doValues[doFieldReference] === undefined || doValues[doFieldReference] === null ){
+            this.defineErrors.push(`type '${doType}' ${doSubject.text} requires a '${doFieldReference}' field`)
+            return;
+        }
 
 
         subjects?.forEach(subject => {
             if (subject) {
                 let line = this?.getLineNumber(subject);
                 if (!this.checkIfValueIsDefined(subject)) {
-                    this.defineErrors.push(`at line ${line} "${subject.text}" is not defined`);
+                    this.defineErrors.push(`[ifThenDo] at line ${line} "${subject.text}" is not defined`);
                     return;
                 }
             }
-            // return;
         });
 
         let ifSubjectObject = this?.objects[ifSubject?.text];
@@ -168,7 +218,7 @@ export default class Visitor implements FireVisitor<any> {
             if (variable) {
                 let line = this?.getLineNumber(variable);
                 if (!this.checkIfValueIsDefined(variable)) {
-                    this.defineErrors.push(`at line ${line} "${variable.text}" is not defined`);
+                    this.defineErrors.push(`[relation] at line ${line} "${variable.text}" is not defined`);
                     return;
                 }
             }
@@ -185,20 +235,16 @@ export default class Visitor implements FireVisitor<any> {
     }
     visitPrintStmt(ctx: PrintStmtContext) {
         let printValue = ctx?.children[1];
-        console.log("printing: ", printValue?.text);
 
         if (!this.checkIfValueIsDefined(printValue)) {
-            console.log("print value is not defined");
             if (printValue) {
-                console.log(`checking if val is string: ${printValue.text}`);
                 if (printValue.text[0] === '"') {
-                    console.log("print value is string");
                     this.setPrintables({
                         type: "string",
                         value: printValue.text.slice(1, -1)
                     });
                 } else {
-                    this.defineErrors.push(`at line ${this?.getLineNumber(printValue)} "${printValue.text}" is not defined`);
+                    this.defineErrors.push(`[print] at line ${this?.getLineNumber(printValue)} "${printValue.text}" is not defined`);
                     return;
                 }
 
@@ -207,23 +253,23 @@ export default class Visitor implements FireVisitor<any> {
         }
 
         if (this.objects[printValue.text]) {
-            console.log("printing object: ", this.objects[printValue.text]);
             this.setPrintables(this.objects[printValue.text]);
         }
         if (this.relations[printValue.text]) {
-            console.log("printing relation: ", this.relations[printValue.text]);
             this.setPrintables(this.relations[printValue.text]);
         }
         if (this.arrays[printValue.text]) {
-            console.log("printing array: ", this.arrays[printValue.text]);
             this.setPrintables(this.arrays[printValue.text]);
+        }
+        if (this.strings[printValue.text]) {
+            this.setPrintables(this.strings[printValue.text]);
+        }
+        if (this.numbers[printValue.text]) {
+            this.setPrintables(this.numbers[printValue.text]);
         }
 
     }
-    visitPrimitiveEntity(ctx: PrimitiveEntityContext) {
-        console.log("visiting primitive")
-        console.log(ctx)
-    }
+
 
 
 
