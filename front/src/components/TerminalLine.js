@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 const TerminalLine = (props) => {
     const [type, setType] = useState('');
     let output = ``;
+
     useEffect(() =>{
         setType(props.type);
     },[props.type])
@@ -27,9 +28,7 @@ const TerminalLine = (props) => {
     }
     return (
         <Container type={type}>
-            {console.log(type)}
             {
-                
                 filterByType(type)
             }
         </Container>
