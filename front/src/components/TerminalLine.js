@@ -50,8 +50,8 @@ const Container = styled.div`
     position: relative;
     font-size:1.2em;
     
-    &::before{
-        content: ' ${props => {
+    &::before {
+        content:'${props => {
         switch(props.type){
             case "err":
                 return "ERR >"
@@ -62,7 +62,8 @@ const Container = styled.div`
             default:
                 return "OUT >"
         }
-    }}';
+    }}'};
+    
         color:${props => {
         switch(props.type){
             case "err":
