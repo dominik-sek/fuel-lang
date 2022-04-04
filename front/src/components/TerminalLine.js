@@ -5,8 +5,7 @@ import React, { useState, useEffect } from 'react';
 const TerminalLine = (props) => {
     const [type, setType] = useState(props.type);
     let output = ``;
-    console.log(type)
-    console.log(props.children)
+
     const filterByType = (type) => {
         switch(type){
             case "err":
@@ -23,7 +22,6 @@ const TerminalLine = (props) => {
                 return <pre>{props.children.name} {JSON.stringify(props.children.values, null, '\t')}</pre>
         }
     }
-    console.log(output)
     return (
         <Container type={type}>
             {
@@ -81,7 +79,14 @@ const Container = styled.div`
         top:0;
         font-family: monospace;
         font-size:1.2em;
+        height:100%;
+        display: flex;
+        align-items: center;
+        background-color: rgb(44, 46, 47);
     }
 
+    & > pre{
+        white-space: pre-wrap;
+    }
 `;
 export default TerminalLine;

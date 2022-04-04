@@ -23,7 +23,7 @@ function App() {
 
   const [code, setCode] = useState(codeString);
   const [codeQueue, setCodeQueue] = useState(codeQueueString);
-
+  
   let chars = new ANTLRInputStream(code);
   let lexer = new FireLexer(chars);
   let tokens  = new CommonTokenStream(lexer);
@@ -45,8 +45,17 @@ function App() {
   let alertInvocations = visitor.getAlertInvocations();
 
 
+  const clear = () => {
+    setCode(``);
+    setCodeQueue(``);
+  }
+  const importFile = () => {
+    clear();
+    document.getElementById('getFile').value = null;
+    document.getElementById('getFile').click();
+  }
   const pushQueue = () => {
-    document.body.scrollTop = document.documentElement.scrollTop = 0;
+    // document.body.scrollTop = document.documentElement.scrollTop = 0;
     setCode(codeQueue);
   }
   
@@ -58,19 +67,45 @@ function App() {
 
   return (
     <Container>
+      <ButtonWrapper>
+      <RunButton onClick={()=>pushQueue()}>
+      Run
+      </RunButton>
+
+      <RunButton onClick={()=>clear()}>
+        Clear
+      </RunButton>
+      
+      
+      <RunButton onClick={()=>importFile()}>
+      Import from file
+      <input type="file" id="getFile" onChange={(e)=>{
+        let file = e.target.files[0];
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          setCodeQueue(e.target.result);
+        }
+        reader.readAsText(file);
+      }
+      }
+
+      style={{display:'none'}}/>
+      </RunButton>
+
+      </ButtonWrapper>
+
+<EditorWrapper>
   <Editor
     value={codeQueue}
     onValueChange={code => setCodeQueue(code)}
     highlight={code => hightlightWithLineNumbers(code, languages.js)}
-    padding={10}
     className={`language-javascript editor`}
     />
+    </EditorWrapper>
 
-    <CompileButton onClick={()=>pushQueue()}>
-      Interpret
-    </CompileButton>
 
-    <Terminal>
+
+    <Terminal id="terminal" >
       {printables.map((printable, index) => {
         return <TerminalLine type={printable.type} key={index}>{printable}</TerminalLine>
       })}
@@ -99,25 +134,34 @@ function App() {
 
 const Container = styled.div`
   display:flex;
-  
-  position:relative;
+  flex-direction: column;
+  min-height:100%;
+  height:100vh;
   & > div{
-    width:50%;
-    
+    width:100%;
   }
 `
-const CompileButton = styled.button`
-  position:absolute;
-  bottom:0;
+const RunButton = styled.button`
+  top:0;
   background:green;
   color:white;
   width:20%;
-  height:5%;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
-`
+  height:100%;
 
+`
+const ButtonWrapper = styled.div`
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  height:5%;
+  min-height: 5%;
+  width:100%;
+  background-color:rgb(44, 46, 47);
+  `;
+const EditorWrapper = styled.div`
+  /* height:65%; */
+  min-height:65%;
+  position: relative;
+`
 
 export default App;

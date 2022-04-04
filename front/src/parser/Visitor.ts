@@ -56,9 +56,9 @@ export default class Visitor implements FireVisitor<any> {
         let ifSubject = ctx.children[ifIndex + 1];
         let ifFieldReference = ctx.children[ifIndex + 2].text.substring(1);
         //==========================================================
-        let operatorNumberPair = ctx.children[3].text;
-        let operator = operatorNumberPair[0];
-        let number = operatorNumberPair.substring(1);
+        let operatorNumberPair = ctx.children[3];
+        let operator = operatorNumberPair.children[0].text;
+        let number = operatorNumberPair.children[1].text;
 
         //==========================================================
         let doSubject = ctx.children[doIndex + 1];
@@ -75,6 +75,7 @@ export default class Visitor implements FireVisitor<any> {
                     return;
                 }
         }
+        // return;
         });
         
         let ifSubjectObject = this?.objects[ifSubject?.text];
@@ -100,12 +101,12 @@ export default class Visitor implements FireVisitor<any> {
 
     }
     visitRelationStmt(ctx: RelationStmtContext) {
-        let prefix = ctx.children[0];
-        let relationENT1 = ctx.children[1];
-        let relationType = ctx.children[2];
-        let relationENT2 = ctx.children[3];
-        let relationName = ctx.children[5];
-        let relationValue = ctx.children[7];
+        let prefix = ctx?.children[0];
+        let relationENT1 = ctx?.children[1];
+        let relationType = ctx?.children[2];
+        let relationENT2 = ctx?.children[3];
+        let relationName = ctx?.children[5];
+        let relationValue = ctx?.children[7];
 
         let variables = [relationENT1, relationENT2];
         variables.forEach(variable => {
@@ -119,18 +120,19 @@ export default class Visitor implements FireVisitor<any> {
         });
 
         let relation = {
-            name: relationName.text,
-            type: prefix.text,
-            entity1: relationENT1.text,
-            entity2: relationENT2.text,
-            values: JSON.parse(relationValue.text)
+            name: relationName?.text,
+            type: prefix?.text,
+            entity1: relationENT1?.text,
+            entity2: relationENT2?.text,
+            values: JSON.parse(relationValue?.text)
         }
         this.relations[relationName.text] = relation;
     }
     visitPrintStmt(ctx: PrintStmtContext) {
-        let printValue = ctx.children[1];
+        let printValue = ctx?.children[1];
         
         if(!this.checkIfValueIsDefined(printValue)){
+            if(printValue){
             if(printValue.text === '"'){
                 this.setPrintables({
                     type: "string",
@@ -140,6 +142,7 @@ export default class Visitor implements FireVisitor<any> {
             this.defineErrors.push(`at line ${this?.getLineNumber(printValue)} "${printValue.text}" is not defined`);
             return;
             }
+        }
         return
         }
 
@@ -155,10 +158,12 @@ export default class Visitor implements FireVisitor<any> {
         
     }
     visitAssignStmt(ctx: AssignStmtContext) {
-        let prefix = ctx.children[0];
-        let objName = ctx.children[1];
-        let objValues = ctx.children[3];
-
+        let prefix = ctx?.children[0];
+        let objName = ctx?.children[1];
+        let objValues = ctx?.children[3];
+        if(!prefix || !objName || !objValues){
+            return;
+        }
         if (prefix.constructor.name === 'PrimitiveEntityContext') {
 
             let obj = {
