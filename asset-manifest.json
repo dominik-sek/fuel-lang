@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/fuel-lang/static/css/main.c0712649.css",
-    "main.js": "/fuel-lang/static/js/main.8376ac8d.js",
+    "main.js": "/fuel-lang/static/js/main.acb54e4d.js",
     "static/js/787.ab8b568e.chunk.js": "/fuel-lang/static/js/787.ab8b568e.chunk.js",
     "index.html": "/fuel-lang/index.html",
     "main.c0712649.css.map": "/fuel-lang/static/css/main.c0712649.css.map",
-    "main.8376ac8d.js.map": "/fuel-lang/static/js/main.8376ac8d.js.map",
+    "main.acb54e4d.js.map": "/fuel-lang/static/js/main.acb54e4d.js.map",
     "787.ab8b568e.chunk.js.map": "/fuel-lang/static/js/787.ab8b568e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c0712649.css",
-    "static/js/main.8376ac8d.js"
+    "static/js/main.acb54e4d.js"
   ]
 }
