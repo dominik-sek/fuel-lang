@@ -8,13 +8,16 @@ const TerminalLine = (props) => {
 
     useEffect(() =>{
         setType(props.type);
+        console.log(props.children.value)
     },[props.type])
 
     const filterByType = (type) => {
         switch(type){
             case "err":
                 return <pre>{props.children}</pre>
-            case "string" || "number":
+            case "string":
+                return <pre>{props.children.value}</pre>
+            case "number":
                 return <pre>{props.children.value}</pre>
             case "alert":
                 for(const property in props.children){

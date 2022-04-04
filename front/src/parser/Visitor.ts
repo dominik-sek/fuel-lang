@@ -73,7 +73,7 @@ export default class Visitor implements FireVisitor<any>  {
                 let string = {
                     name: objName.text,
                     type: "string",
-                    value: objValues.children[0].text,
+                    value: objValues.children[0].text.slice(1, -1),
                 }
                 this.strings[objName.text] = string;
                 break;
@@ -238,16 +238,10 @@ export default class Visitor implements FireVisitor<any>  {
 
         if (!this.checkIfValueIsDefined(printValue)) {
             if (printValue) {
-                if (printValue.text[0] === '"') {
-                    this.setPrintables({
-                        type: "string",
-                        value: printValue.text.slice(1, -1)
-                    });
-                } else {
+                
                     this.defineErrors.push(`[print] at line ${this?.getLineNumber(printValue)} "${printValue.text}" is not defined`);
                     return;
-                }
-
+                
             }
             return
         }
