@@ -305,7 +305,6 @@ const ButtonWrapper = styled.div`
   
     & > button{
       margin:0px 5px;
-      width:10%;
       height:80%;
     }
   `;

@@ -1,10 +1,13 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 const TerminalLine = (props) => {
-    const [type, setType] = useState(props.type);
+    const [type, setType] = useState('');
     let output = ``;
+    useEffect(() =>{
+        setType(props.type);
+    },[props.type])
 
     const filterByType = (type) => {
         switch(type){
@@ -24,7 +27,9 @@ const TerminalLine = (props) => {
     }
     return (
         <Container type={type}>
+            {console.log(type)}
             {
+                
                 filterByType(type)
             }
         </Container>
