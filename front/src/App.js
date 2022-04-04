@@ -1,7 +1,7 @@
 import './App.css';
 import Editor from 'react-simple-code-editor';
 import Terminal from './components/Terminal';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';

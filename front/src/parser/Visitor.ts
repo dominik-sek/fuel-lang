@@ -1,9 +1,7 @@
-import { FireLexer } from './FireLexer';
 import { ErrorNode } from "antlr4ts/tree/ErrorNode";
 import { ParseTree } from "antlr4ts/tree/ParseTree";
 import { TerminalNode } from "antlr4ts/tree/TerminalNode";
-import { FireParser, ObjectChildReferenceContext } from "./FireParser";
-import {ANTLRErrorListener} from "antlr4ts";
+import { ObjectChildReferenceContext } from "./FireParser";
 import { CompilationUnitContext, StmtContext, RelationStmtContext, AssignStmtContext, PrintStmtContext, JsonContext, JsonObjectContext, VariableNameContext, KeyValuePairContext, PrimitiveEntityContext, ValueContext, ArrContext, BoolContext, IfThenDoStmtContext } from "./FireParser";
 import { FireVisitor } from "./FireVisitor";
 
@@ -62,7 +60,7 @@ export default class Visitor implements FireVisitor<any> {
 
         //==========================================================
         let doSubject = ctx.children[doIndex + 1];
-        let doFieldReference = ctx.children[doIndex + 2].text.substring(1);
+        // let doFieldReference = ctx.children[doIndex + 2].text.substring(1);
 
         let subjects = [ifSubject, doSubject];
         
@@ -103,7 +101,7 @@ export default class Visitor implements FireVisitor<any> {
     visitRelationStmt(ctx: RelationStmtContext) {
         let prefix = ctx?.children[0];
         let relationENT1 = ctx?.children[1];
-        let relationType = ctx?.children[2];
+        // let relationType = ctx?.children[2];
         let relationENT2 = ctx?.children[3];
         let relationName = ctx?.children[5];
         let relationValue = ctx?.children[7];
