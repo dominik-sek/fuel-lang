@@ -32,24 +32,24 @@ const TerminalLine = (props) => {
 }
 
 const Container = styled.div`
-    background:black;
+    background:rgb(0,30,60);
     color:${props => {
         switch(props.type){
             case "err":
-                return "red"
+                return "#d32f2f"
             case "string":
                 return "white"
             case "alert":
-                return "yellow"
+                return "#d38d2f"
             default:
                 return "white"
         }
     }};
+
     position: relative;
     font-size:1.2em;
-    
+
     &::before {
-        background-color: rgb(44, 46, 47);
         height:100%;
         display: flex;
         justify-content: center;
@@ -70,11 +70,11 @@ const Container = styled.div`
         color:${props => {
         switch(props.type){
             case "err":
-                return "red"
+                return "#d32f2f"
             case "string":
                 return "white"
             case "alert":
-                return "yellow"
+                return "#d38d2f"
             default:
                 return "white"
         }
@@ -89,6 +89,7 @@ const Container = styled.div`
 
     & > pre{
         white-space: pre-wrap;
+        padding-left: 2ch;
     }
 `;
 export default TerminalLine;

@@ -11,7 +11,8 @@ const Terminal = (props) => {
 }
  
 const TerminalContainer = styled.div`
-    background:black;
+    background:rgb(0,30,60);
+    opacity: 90%;
     color:greenyellow;
     height:100%;
     min-height:100%;
