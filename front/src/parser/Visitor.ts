@@ -15,7 +15,7 @@ export default class Visitor implements FireVisitor<any> {
     visitJsonObject?: (ctx: JsonObjectContext) => any;
     visitVariableName?: (ctx: VariableNameContext) => any;
     visitKeyValuePair?: (ctx: KeyValuePairContext) => any;
-    visitPrimitiveEntity?: (ctx: PrimitiveEntityContext) => any;
+    // visitPrimitiveEntity?: (ctx: PrimitiveEntityContext) => any;
     visitValue?: (ctx: ValueContext) => any;
     visitArr?: (ctx: ArrContext) => any;
     visitBool?: (ctx: BoolContext) => any;
@@ -38,7 +38,7 @@ export default class Visitor implements FireVisitor<any> {
     alertInvocations = [];
 
     private checkIfValueIsDefined(subjectName: ParseTree) {
-        if(this.objects[subjectName?.text] || this.arrays[subjectName?.text] || this.relations[subjectName?.text]){
+        if (this.objects[subjectName?.text] || this.arrays[subjectName?.text] || this.relations[subjectName?.text]) {
             return true;
         }
         return false;
@@ -46,16 +46,18 @@ export default class Visitor implements FireVisitor<any> {
     private getLineNumber(ctx?: ParseTree) {
         return ctx?.start?.line;
     }
+
     visitAssignStmt(ctx: AssignStmtContext) {
         let prefix = ctx?.children[0];
         let objName = ctx?.children[1];
         let objValues = ctx?.children[3];
         console.log("trying to assign with", prefix, objValues.constructor.name);
 
-        if(!prefix || !objName || !objValues){
+        if (!prefix || !objName || !objValues) {
             console.log("error: ", prefix, objName, objValues);
             return;
         }
+
         if (prefix.constructor.name === 'PrimitiveEntityContext') {
             let obj = {
                 name: objName.text,
@@ -87,11 +89,11 @@ export default class Visitor implements FireVisitor<any> {
                         console.log("found relation: ", this.relations[value]);
                         return this.relations[value].values;
                     }
-                    if(value.includes('"')){
+                    if (value.includes('"')) {
                         console.log("found string: ", value);
                         return value.slice(1, -1);
                     }
-                    if(value.includes("")){
+                    if (value.includes("")) {
                         return value;
                     }
                     console.log("found primitive: ", value);
@@ -118,26 +120,26 @@ export default class Visitor implements FireVisitor<any> {
         // let doFieldReference = ctx.children[doIndex + 2].text.substring(1);
 
         let subjects = [ifSubject, doSubject];
-        
-        
+
+
         subjects?.forEach(subject => {
-        if(subject){
-            let line = this?.getLineNumber(subject);
-                if(!this.checkIfValueIsDefined(subject)){
+            if (subject) {
+                let line = this?.getLineNumber(subject);
+                if (!this.checkIfValueIsDefined(subject)) {
                     this.defineErrors.push(`at line ${line} "${subject.text}" is not defined`);
                     return;
                 }
-        }
-        // return;
+            }
+            // return;
         });
-        
+
         let ifSubjectObject = this?.objects[ifSubject?.text];
         let doSubjectObject = this?.objects[doSubject?.text];
 
-        if(eval(ifSubjectObject?.values[ifFieldReference] + operator + number)){
-             let desc : string;
-            for(const relation of Object.entries(this.relations)){
-                if(ifSubjectObject.values.entity === relation[1].entity1){
+        if (eval(ifSubjectObject?.values[ifFieldReference] + operator + number)) {
+            let desc: string;
+            for (const relation of Object.entries(this.relations)) {
+                if (ifSubjectObject.values.entity === relation[1].entity1) {
                     desc = relation[1].values.name
                 }
             }
@@ -145,8 +147,8 @@ export default class Visitor implements FireVisitor<any> {
                 invoker: ifSubjectObject.values.entity,
                 activity: ifSubjectObject.name,
                 event: doSubjectObject.values.name,
-                eventGoal:doSubjectObject.values.goal,
-                eventLocation:doSubjectObject.values.location,
+                eventGoal: doSubjectObject.values.goal,
+                eventLocation: doSubjectObject.values.location,
                 invokerDesc: desc,
             }
             this.alertInvocations.push(invocation);
@@ -163,9 +165,9 @@ export default class Visitor implements FireVisitor<any> {
 
         let variables = [relationENT1, relationENT2];
         variables.forEach(variable => {
-            if(variable){
+            if (variable) {
                 let line = this?.getLineNumber(variable);
-                if(!this.checkIfValueIsDefined(variable)){
+                if (!this.checkIfValueIsDefined(variable)) {
                     this.defineErrors.push(`at line ${line} "${variable.text}" is not defined`);
                     return;
                 }
@@ -184,24 +186,24 @@ export default class Visitor implements FireVisitor<any> {
     visitPrintStmt(ctx: PrintStmtContext) {
         let printValue = ctx?.children[1];
         console.log("printing: ", printValue?.text);
-        
-        if(!this.checkIfValueIsDefined(printValue)){
-            console.log("print value is not defined");
-        if(printValue){
-                console.log(`checking if val is string: ${printValue.text}`);
-            if(printValue.text[0] === '"'){
-                console.log("print value is string");
-                this.setPrintables({
-                    type: "string",
-                    value: printValue.text.slice(1, -1)
-                });
-            }else{
-                this.defineErrors.push(`at line ${this?.getLineNumber(printValue)} "${printValue.text}" is not defined`);
-            return;
-            }
 
-        }
-        return
+        if (!this.checkIfValueIsDefined(printValue)) {
+            console.log("print value is not defined");
+            if (printValue) {
+                console.log(`checking if val is string: ${printValue.text}`);
+                if (printValue.text[0] === '"') {
+                    console.log("print value is string");
+                    this.setPrintables({
+                        type: "string",
+                        value: printValue.text.slice(1, -1)
+                    });
+                } else {
+                    this.defineErrors.push(`at line ${this?.getLineNumber(printValue)} "${printValue.text}" is not defined`);
+                    return;
+                }
+
+            }
+            return
         }
 
         if (this.objects[printValue.text]) {
@@ -216,8 +218,13 @@ export default class Visitor implements FireVisitor<any> {
             console.log("printing array: ", this.arrays[printValue.text]);
             this.setPrintables(this.arrays[printValue.text]);
         }
-        
+
     }
+    visitPrimitiveEntity(ctx: PrimitiveEntityContext) {
+        console.log("visiting primitive")
+        console.log(ctx)
+    }
+
 
 
     visitChildren(ctx) {
@@ -235,7 +242,7 @@ export default class Visitor implements FireVisitor<any> {
         }
 
     }
-    
+
     getObjects() {
         return this.objects;
     }
@@ -248,14 +255,14 @@ export default class Visitor implements FireVisitor<any> {
     getAlertInvocations() {
         return this.alertInvocations;
     }
-    getPrintables(){
+    getPrintables() {
         return this.printables;
     }
-    getDefineErrors(){
+    getDefineErrors() {
         return this.defineErrors;
     }
-    setPrintables(printable){
+    setPrintables(printable) {
         this.printables.push(printable);
     }
-    
+
 }
