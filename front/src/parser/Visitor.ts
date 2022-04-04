@@ -46,7 +46,62 @@ export default class Visitor implements FireVisitor<any> {
     private getLineNumber(ctx?: ParseTree) {
         return ctx?.start?.line;
     }
+    visitAssignStmt(ctx: AssignStmtContext) {
+        let prefix = ctx?.children[0];
+        let objName = ctx?.children[1];
+        let objValues = ctx?.children[3];
+        console.log("trying to assign with", prefix, objValues.constructor.name);
 
+        if(!prefix || !objName || !objValues){
+            console.log("error: ", prefix, objName, objValues);
+            return;
+        }
+        if (prefix.constructor.name === 'PrimitiveEntityContext') {
+            let obj = {
+                name: objName.text,
+                type: prefix.text,
+                values: JSON.parse(objValues.text)
+            }
+            this.objects[objName.text] = obj;
+        }
+
+        if (objValues.constructor.name === 'ArrContext') {
+            console.log("found array");
+            let arrValues = objValues.text.slice(1, -1).split(',');
+            console.log(`${objName.text} = ${arrValues}`);
+
+            let arr = {
+                name: objName.text,
+                type: "array",
+                values: arrValues.map(value => {
+                    console.log("trying to map: ", value);
+                    if (this.objects[value]) {
+                        console.log("found object: ", this.objects[value]);
+                        return this.objects[value].values;
+                    }
+                    if (this.arrays[value]) {
+                        console.log("found array: ", this.arrays[value]);
+                        return this.arrays[value].values;
+                    }
+                    if (this.relations[value]) {
+                        console.log("found relation: ", this.relations[value]);
+                        return this.relations[value].values;
+                    }
+                    if(value.includes('"')){
+                        console.log("found string: ", value);
+                        return value.slice(1, -1);
+                    }
+                    if(value.includes("")){
+                        return value;
+                    }
+                    console.log("found primitive: ", value);
+                    return value;
+                })
+            }
+            this.arrays[objName.text] = arr;
+        }
+
+    }
     visitIfThenDoStmt(ctx: IfThenDoStmtContext) {
         let ifIndex = ctx.children.findIndex(child => child.text === 'IF');
         let doIndex = ctx.children.findIndex(child => child.text === 'DO');
@@ -162,55 +217,6 @@ export default class Visitor implements FireVisitor<any> {
             this.setPrintables(this.arrays[printValue.text]);
         }
         
-    }
-    visitAssignStmt(ctx: AssignStmtContext) {
-        let prefix = ctx?.children[0];
-        let objName = ctx?.children[1];
-        let objValues = ctx?.children[3];
-        if(!prefix || !objName || !objValues){
-            return;
-        }
-        if (prefix.constructor.name === 'PrimitiveEntityContext') {
-
-            let obj = {
-                name: objName.text,
-                type: prefix.text,
-                values: JSON.parse(objValues.text)
-            }
-            this.objects[objName.text] = obj;
-        }
-
-        if (objValues.constructor.name === 'ArrContext') {
-            let arrValues = objValues.text.slice(1, -1).split(',');
-            console.log("inside arrcontext", arrValues);
-            let arr = {
-                name: objName.text,
-                type: "array",
-                values: arrValues.map(value => {
-                    console.log("trying to map: ", value);
-                    if (this.objects[value]) {
-                        console.log("found object: ", this.objects[value]);
-                        return this.objects[value].values;
-                    }
-                    if (this.arrays[value]) {
-                        console.log("found array: ", this.arrays[value]);
-                        return this.arrays[value].values;
-                    }
-                    if (this.relations[value]) {
-                        console.log("found relation: ", this.relations[value]);
-                        return this.relations[value].values;
-                    }
-                    if(value.includes('"')){
-                        console.log("found string: ", value);
-                        return value.slice(1, -1);
-                    }
-                    console.log("found primitive: ", value);
-                    return value;
-                })
-            }
-            this.arrays[objName.text] = arr;
-        }
-
     }
 
 

@@ -24,7 +24,7 @@ function App() {
   const [code, setCode] = useState(codeString);
   const [codeQueue, setCodeQueue] = useState(codeQueueString);
   
-  let version = '0.0.1';
+  let version = '0.0.3';
   let chars = new ANTLRInputStream(code);
   let lexer = new FireLexer(chars);
   let tokens  = new CommonTokenStream(lexer);
