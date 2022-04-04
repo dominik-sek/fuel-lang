@@ -6,28 +6,27 @@ html{
 body{
   height:100%;
   min-height: 100%;
+  overflow: hidden;
+
 }
 .editor{
   background-color: black;
-  border-bottom: 5px solid white;
   color: beige;
-  height:100%;
   counter-reset: line;
   font-size: 1.2em;
   font-family: monospace;
-  overflow: scroll !important;
-  position: unset !important;
 }
 .editor textarea {
   outline: none;
   padding-left: 60px !important;
-  height: unset;
-  min-height: 100%;
+
 }
 .editor pre {
   padding-left: 60px !important;
 }
+/* .language-javascript{
 
+} */
 .editor .editorLineNumber {
   position: absolute;
   left: 0px;

@@ -44,6 +44,9 @@ function App() {
   let defineErrors = visitor.getDefineErrors();
   let alertInvocations = visitor.getAlertInvocations();
 
+  const focusTextArea = () => {
+    document.getElementsByTagName('textarea')[0].focus();
+  }
 
   const clear = () => {
     setCode(``);
@@ -94,14 +97,16 @@ function App() {
 
       </ButtonWrapper>
 
-<EditorWrapper>
-  <Editor
-    value={codeQueue}
-    onValueChange={code => setCodeQueue(code)}
-    highlight={code => hightlightWithLineNumbers(code, languages.js)}
-    className={`language-javascript editor`}
-    />
+      <EditorWrapper onClick={()=>focusTextArea()}>
+
+          <Editor
+            value={codeQueue}
+            onValueChange={code => setCodeQueue(code)}
+            highlight={code => hightlightWithLineNumbers(code, languages.js)}
+            className={`language-javascript editor`}
+            />
     </EditorWrapper>
+
 
 
 
@@ -147,7 +152,7 @@ const RunButton = styled.button`
   color:white;
   width:20%;
   height:100%;
-
+  cursor: pointer;
 `
 const ButtonWrapper = styled.div`
   display:flex;
@@ -159,9 +164,12 @@ const ButtonWrapper = styled.div`
   background-color:rgb(44, 46, 47);
   `;
 const EditorWrapper = styled.div`
-  /* height:65%; */
-  min-height:65%;
-  position: relative;
+  height:65%;
+  min-height: 65%;
+  width: 100%;
+  overflow-y: scroll;
+  background-color: black;
+  cursor: text;
 `
 
 export default App;
