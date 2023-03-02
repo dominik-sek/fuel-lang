@@ -48,8 +48,8 @@ requires a **goal** field
         "state": "active"
     }
 ```
-* **REL => as**
-defines a Relation
+* **REL [ENT] => [ENT] as**
+defines a Relation between two entity objects
 ```
     REL PALIWO_0002 => KONTENER_0002 as REL_0004 = {
         "name": "Paliwo 2 znajduje sie w Kontenerze 2",
