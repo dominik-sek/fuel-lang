@@ -1,5 +1,5 @@
 # Fuel Language
-fuel language is a simple DSL based on this [model]().
+fuel language is a simple [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) based on this [model]().
 Using [ANTLR4](https://www.antlr.org/) :
 * I wrote a simple [grammar](https://github.com/gothic459/fuel-lang/blob/main/front/src/parser/Fire.g4)
 * Used [antlr4ts](https://github.com/tunnelvisionlabs/antlr4ts) to generate a [parser](https://github.com/gothic459/fuel-lang/blob/main/front/src/parser/FireParser.ts) and a [lexer](https://github.com/gothic459/fuel-lang/blob/main/front/src/parser/FireLexer.ts) targetting TypeScript
